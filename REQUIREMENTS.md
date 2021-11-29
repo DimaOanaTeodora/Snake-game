@@ -122,3 +122,7 @@ meet the requirements, use only for inspiration!)
 3. Make it feel like a complete project as much as possible. Small details and finishing touches separate a prototype from a product.
 4. Remember to follow the coding guidelines.
 5. Remember that while details are important, the bulk of your grade will come from the fact if it works.
+6. Ask the staff (aka me) for any questions and details. Do not assume instead of asking.
+7. Add bonus stuff and make it personal: animations, theme songs, hardware and build robustness etc.
+8. Remember that we have way more components in the laboratory that you have not used yet: mp3 players, sensors etc.
+9. Completing each phase adds a weight to your grade. The final grade will be awarded like this: finalPresentationRequirements * (phase1Weight + phase2Weight + phase3Weight) / 3.
