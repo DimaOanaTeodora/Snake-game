@@ -6,7 +6,11 @@
  * enter player name si dupa intra in joc
  * salvare in memorie stringuri
  * submeniurile de setari din settings
+ * sectiunea about
  * headere la final
+ * save the name to eeprom
+ * buguri la nume
+ * bug scroll down settings menu
 */
 //LCD
 const int RS = 9;
@@ -44,27 +48,23 @@ int settingsMenuOption = 0;
 bool mainMenuOpened = false; // max 5
 bool settingsMenuOpened = false;
 bool subMenuOpened = false;
-
+bool enteringPlayerName = false;
+String playerName = "__________"; // max 10 
+String alphabet = "abcdefghijklmnopqrstuvwxyz";
+int playerNamePosition = 0;
+int alphabetPosition = -1;
 void setup(){
-  //loadMemory();//temporarely
-  //memoryIndexCounter = EEPROM.read(0); //TODO
-  
   lcd.begin(16, 2);
   lcd.clear();
   lcd.setCursor(0, 0);
   
   pinMode(RS, OUTPUT);
-
   pinMode(joyX, INPUT);
   pinMode(joyY, INPUT);
-  pinMode(pinSw, INPUT);
+  pinMode(pinSw, INPUT_PULLUP);
   
-  //greetings();
+  greetings();
   scrollMainMenu("START");
-  //LCDGame(1, 0);
-  //LCDGameOver();
-
-  //highScoreMenu();
   
   Serial.begin(9600);
 }
@@ -132,27 +132,56 @@ void highScoreMenu(){
 }
 void aboutMenu(){
   /*
-   * moving menu TODO
+   * changing menu
    */
   subMenuOpened = true;
   
   lcd.clear();
-  
-  lcd.setCursor(1, 0);
-  lcd.print("C: Oana Dima");
+  lcd.setCursor(4, 0);
+  lcd.print("Credits");
+  lcd.setCursor(1, 1);
+  lcd.print("Oana Dima 341");
 
+  delay(2000);
+
+  lcd.clear();
+  lcd.setCursor(2, 0);
+  lcd.print("Introduction");
+  lcd.setCursor(3, 1);
+  lcd.print("to Robotics");
+  
+  delay(2000);
+
+  lcd.clear();
+  lcd.setCursor(2, 0);
+  lcd.print("github.com/");
   lcd.setCursor(0, 1);
-  lcd.print("github.com/DimaOanaTeodora");
+  lcd.print("DimaOanaTeodora");
+
+  delay(2000);
+  
+  lcd.clear();
+  lcd.setCursor(4, 0);
+  lcd.print("Thanks!");
+  lcd.setCursor(5, 1);
+  lcd.print("<<back");
 }
 
-void enterPlayerName(){
+void enterPlayerNameSubMenu(){
+  enteringPlayerName = true;
   lcd.clear();
   
-  lcd.setCursor(1, 0);
-  lcd.print("Name: ");
+  lcd.setCursor(0, 0);
+  lcd.print("NAME: ");
 
+  enterPlayerName();
+    
   lcd.setCursor(0, 1);
-  lcd.print(">>continue");
+  lcd.print("Press to START");
+}
+void enterPlayerName(){
+  lcd.setCursor(6,0);
+  lcd.print(playerName);
 }
 void backFromSubMainMenus(){
   subMenuOpened = false;
@@ -189,11 +218,7 @@ void toSettingsMenu(){
       SCROLLING TEXT (*)
   */
 void scrollMenu(String option){
-  lcd.clear();
-
-  lcd.setCursor(1,0);
-  lcd.print("Move to scroll");
-  
+ 
   if(option.length() <=7){
     lcd.setCursor(4, 1);
   }else{
@@ -204,10 +229,16 @@ void scrollMenu(String option){
 }
 void scrollMainMenu(String option){
   mainMenuOpened = true;
+  lcd.clear();
+  lcd.setCursor(1,0);
+  lcd.print("Move to scroll");
   scrollMenu(option);
 }
 void scrollSettingsMenu(String option){
   settingsMenuOpened = true;
+  lcd.clear();
+  lcd.setCursor(3,0);
+  lcd.print("Settings");
   scrollMenu(option);
 }
 
@@ -255,9 +286,33 @@ void verifyIfJoystickWasMovedLeft(){
     joyMovedLeft = true;
   }
 }
+void savePlayerName(){
+    String copy = playerName;
+    playerName = "";
+    for (int i = 0; i< copy.length(); i++){
+      if(copy[i] == '_'){
+        break;
+      }else{
+        playerName.concat(copy[i]);
+      }
+    }
+    //save to EEPROM 
+    Serial.println(playerName);
+}
 void loop(){
+  /*read switch state
+  cand e apasat sa faca enteringPlayerName = false*/
    xValue = analogRead(joyX);
    yValue = analogRead(joyY);
+   switchState = digitalRead(pinSw);
+
+   Serial.println(switchState);
+
+   if(switchState == LOW && enteringPlayerName == true){
+      gameLCD(1,1);
+      enteringPlayerName = false;
+      savePlayerName();
+   }
 
    verifyIfJoystickWasMoved();
    verifyIfJoystickWasMovedUp();
@@ -266,7 +321,14 @@ void loop(){
    verifyIfJoystickWasMovedLeft();
 
    if (joyMovedUp == true){
-    if(mainMenuOpened == true){
+    if(enteringPlayerName == true){
+         alphabetPosition +=1;
+         if(alphabetPosition >= alphabet.length()){
+            alphabetPosition = 0;
+         }
+         playerName[playerNamePosition]= alphabet[alphabetPosition];
+         enterPlayerNameSubMenu();
+    }else if(mainMenuOpened == true){
       mainMenuOption --;
       if(mainMenuOption == -1){
         mainMenuOption = 3;
@@ -274,8 +336,7 @@ void loop(){
         mainMenuOption = 0;
       }
       scrollMainMenu(mainMenuOptions[mainMenuOption]);
-    }
-    if(settingsMenuOpened == true){
+    }else if(settingsMenuOpened == true){
       settingsMenuOption --;
       if(settingsMenuOption == -1){
         settingsMenuOption = 5;
@@ -284,10 +345,18 @@ void loop(){
       }
       scrollSettingsMenu(settingsMenuOptions[settingsMenuOption]);
     }
+    delay(250);
    }
    
    if(joyMovedDown == true){
-    if(mainMenuOpened == true){
+    if(enteringPlayerName == true){
+         alphabetPosition -=1;
+         if(alphabetPosition <= 0){
+            alphabetPosition = alphabet.length()-1;
+         }
+         playerName[playerNamePosition]= alphabet[alphabetPosition];
+         enterPlayerNameSubMenu();
+    }else if(mainMenuOpened == true){
       mainMenuOption ++;
       if(mainMenuOption == -1){
         mainMenuOption = 3;
@@ -295,8 +364,7 @@ void loop(){
         mainMenuOption = 0;
       }
       scrollMainMenu(mainMenuOptions[mainMenuOption]);
-    }
-    if(settingsMenuOpened == true){
+    }else if(settingsMenuOpened == true){
       settingsMenuOption ++;
       if(settingsMenuOption == -1){
         settingsMenuOption = 5;
@@ -305,12 +373,21 @@ void loop(){
       }
       scrollSettingsMenu(settingsMenuOptions[settingsMenuOption]);
     }
+    delay(250);
    }
 
    if (joyMovedRight == true){
-    if(mainMenuOpened == true){
+    if(enteringPlayerName == true){
+        playerNamePosition +=1;
+        if(playerNamePosition >= 10){
+          playerNamePosition = 0;
+        }
+        alphabetPosition = -1;
+        enterPlayerNameSubMenu();      
+    }else if(mainMenuOpened == true){
       if(mainMenuOption == 0){
-        gameLCD(1,1);
+        //gameLCD(1,1);
+        enterPlayerNameSubMenu();
         gameHasStarted = true;
       }else if(mainMenuOption == 1){
           highScoreMenu();
@@ -335,14 +412,21 @@ void loop(){
           backFromSettingsMenu();
         }
     }
+    delay(250);
    }
 
    if (joyMovedLeft == true){
-    if(mainMenuOpened == true && subMenuOpened == true){
+    if(enteringPlayerName == true){
+        playerNamePosition -=1;
+        if(playerNamePosition <= 0){
+          playerNamePosition = 9;
+        }
+        enterPlayerNameSubMenu();      
+    }else if(mainMenuOpened == true && subMenuOpened == true){
       backFromSubMainMenus();
     }else if(settingsMenuOpened == true && subMenuOpened == true){
       backFromSubSettingsMenus();
     }
+    delay(250);
    }
-   delay(300);
 }
