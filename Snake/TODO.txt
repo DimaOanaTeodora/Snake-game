@@ -1,0 +1,10 @@
+- Bugs:
+- cand se schimba dupa greetings face urat
+- si la about e aceeasi problema
+- trebuie apasat butonul mai mult
+
+- Features:
+- de sincronizat matricea cu sagetile
+- de citit si scris in memorie (high score)
+- ecran cu numele jucatorului doar ca face highscore
+- de sincronizat sunetul 
