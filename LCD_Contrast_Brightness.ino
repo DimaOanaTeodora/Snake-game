@@ -10,9 +10,10 @@ const byte contrastPin = 6;
 const byte brightnessPin = 9;
 LiquidCrystal lcd(RS, enable, d4, d5, d6, d7);
 
-int contrastValue= 110;
+int contrastValue= 105;
 int brightnessValue = 28836;
 byte brightnessLevel = 2;
+byte contrastLevel = 1;
 byte minInterval = 1;
 byte maxInterval = 3;
 
@@ -26,6 +27,8 @@ int xValue = 0;
 int yValue = 0;
 bool switchState = LOW; //Joystick button
 
+byte currentSubMenu = 0;
+byte currentMenu = 0;
 void setup() 
 {
   lcd.begin(16, 2);
@@ -39,24 +42,42 @@ void setup()
   analogWrite(contrastPin, contrastValue);
   analogWrite(brightnessPin, brightnessValue); 
 
-  brightnessMenu();
-  changeBrightness();
+  //brightnessMenu();
+  //changeBrightness();
 
+  contrastMenu();
+  changeContrast();
+  
   Serial.begin(9600);
 }
 void brightnessMenu(){
+  currentSubMenu = 0;
   lcd.clear();
   lcd.setCursor(1,0);
   lcd.print("Brightness ");
 
   lcd.setCursor(1,1);
   lcd.print("Press for EXIT");
+}
+void contrastMenu(){
+  currentSubMenu = 1;
+  lcd.clear();
+  lcd.setCursor(1,0);
+  lcd.print("Contrast ");
 
+  lcd.setCursor(1,1);
+  lcd.print("Press for EXIT");
 }
 void changeBrightness(){
   analogWrite(brightnessPin, brightnessValue + brightnessLevel * 100);
   lcd.setCursor(12, 0);
   lcd.print(brightnessLevel);
+  lcd.print("/3");
+}
+void changeContrast(){
+  analogWrite(contrastPin, contrastValue + contrastLevel * 5);
+  lcd.setCursor(11, 0);
+  lcd.print(contrastLevel);
   lcd.print("/3");
 }
 void save(){
@@ -73,15 +94,25 @@ void loop()
   if(ifJoystickPressed()){
     save();
   }
-  if(ifJoystickMovedRight() && brightnessLevel < maxInterval){
-      brightnessLevel ++;
-      changeBrightness();
-   }else if(ifJoystickMovedLeft() && brightnessLevel > minInterval){
-      brightnessLevel --;
-      changeBrightness();
-   }
+  if(currentSubMenu == 1){
+    if(ifJoystickMovedRight() && contrastLevel < maxInterval){
+        contrastLevel ++;
+        changeContrast();
+    }else if(ifJoystickMovedLeft() && contrastLevel > minInterval){
+        contrastLevel --;
+        changeContrast();
+    }
+  }else if(currentSubMenu == 0){
+    if(ifJoystickMovedRight() && brightnessLevel < maxInterval){
+        brightnessLevel ++;
+        changeBrightness();
+    }else if(ifJoystickMovedLeft() && brightnessLevel > minInterval){
+        brightnessLevel --;
+        changeBrightness();
+    }
+  }
 
-   delay(250);
+  delay(250);
   
 }
 bool ifJoystickPressed(){
