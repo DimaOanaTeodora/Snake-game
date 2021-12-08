@@ -2,9 +2,21 @@
 - cand se schimba dupa greetings face urat
 - si la about e aceeasi problema
 - trebuie apasat butonul mai mult
+- uneori mancarea nu mai apare
+
 
 - Features:
 - de sincronizat matricea cu sagetile
 - de citit si scris in memorie (high score)
 - ecran cu numele jucatorului doar ca face highscore
-- de sincronizat sunetul 
+- de sincronizat si pus sunetul 
+- ecranul cu alegere de play again
+- de generat sarpele aleatoriu
+- de facut teleportarea
+- de pus sunetul si desenul de final 
+- game over menu
+- high score menu
+- diferenta de nivel
+
+- cod spatieri
+- optimizari 

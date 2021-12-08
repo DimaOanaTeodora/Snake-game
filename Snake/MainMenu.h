@@ -26,6 +26,8 @@ void changeSubMainMenu(){
   switch (currentMainMenu) {
   case 0:
     start();
+    game();
+    resetGame();
     break;
   case 1:
     highScore();
@@ -34,7 +36,6 @@ void changeSubMainMenu(){
     mainMenuOpened = false;
     subMainMenuOpened = false;
     settingsMenu();
-    //updateSettingsMenu();
     break;
   case 3:
     about();

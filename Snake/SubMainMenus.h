@@ -1,6 +1,5 @@
-//START - TODO
+//START 
 void start() {
-   
   updateMatrixDisplay(three); 
   lcd.clear();
   lcd.setCursor(5, 0);
@@ -21,23 +20,47 @@ void start() {
   lcd.print("GO!");
 
   delay(1500);
+
+  gameHasStarted = true;
 }
 
 //HIGH SCORE - TODO
 void highScore(){
-  String playerName = "Ana";
-  int highScore = 20; 
-  
-  //TODO: Memory.returnHighScore(highScore, playerName);
-  
   lcd.clear();
-  
-  lcd.setCursor(0, 0);
-  lcd.print(playerName);
-  lcd.print(": ");
-  lcd.print(highScore);
-  
-  lcd.setCursor(10, 1);
+  lcd.setCursor(2, 0);
+  lcd.print("LEADERBOARD");
+  lcd.setCursor(2, 1);
+  lcd.print("1.");
+  lcd.print(readStringFromEEPROM(3));
+  lcd.print(" ");
+  lcd.print(EEPROM.read(0));
+
+  delay(1500);
+   
+  lcd.clear();
+  lcd.setCursor(2, 0);
+  lcd.print("LEADERBOARD");
+  lcd.setCursor(2, 1);
+  lcd.print("2.");
+  lcd.print(readStringFromEEPROM(4));
+  lcd.print(" ");
+  lcd.print(EEPROM.read(1));
+
+  delay(1500);
+   
+  lcd.clear();
+  lcd.setCursor(2, 0);
+  lcd.print("LEADERBOARD");
+  lcd.setCursor(2, 1);
+  lcd.print("3.");
+  lcd.print(readStringFromEEPROM(5));
+  lcd.print(" ");
+  lcd.print(EEPROM.read(2));
+
+  delay(1500);
+
+  lcd.clear();
+  lcd.setCursor(5, 0);
   lcd.print("<<back");
 }
 
@@ -46,8 +69,8 @@ void highScore(){
 // ABOUT
 void about(){
   lcd.clear();
-  lcd.setCursor(4, 0);
-  lcd.print("Credits");
+  lcd.setCursor(1, 0);
+  lcd.print("SNAKE~~Credits");
   lcd.setCursor(1, 1);
   lcd.print("Oana Dima 341");
 

@@ -8,6 +8,9 @@ int xValue = 0;
 int yValue = 0;
 bool switchState = LOW; //Joystick button
 
+// if game has started the matrix shows the snake else the matrix shows the arrows
+bool gameHasStarted = false;
+
 // Functions
 void readFromJoystick(){
   xValue = analogRead(joyX);
@@ -24,7 +27,9 @@ bool ifJoystickMovedUp(){
   if(yValue >= minTreshold){
     return false;
   }else if(yValue < minTreshold){
-    updateMatrixDisplay(up);
+    if(!gameHasStarted){
+      updateMatrixDisplay(up);
+    }
     return true;
   }
 }
@@ -32,7 +37,9 @@ bool ifJoystickMovedDown(){
   if(yValue <= maxTreshold){
     return false;
   }else if(yValue > maxTreshold){
-    updateMatrixDisplay(down);
+    if(!gameHasStarted){
+      updateMatrixDisplay(down);
+    }
     return true;
   }
 }
@@ -40,7 +47,9 @@ bool ifJoystickMovedRight(){
   if(xValue <= maxTreshold){
     return false;
   }else if(xValue > maxTreshold){
-    updateMatrixDisplay(right);
+    if(!gameHasStarted){
+      updateMatrixDisplay(right);
+    }
     return true;
   }
 }
@@ -48,7 +57,9 @@ bool ifJoystickMovedLeft(){
   if(xValue >= minTreshold){
     return false;
   }else if(xValue < minTreshold){
-    updateMatrixDisplay(left);
+    if(!gameHasStarted){
+      updateMatrixDisplay(left);
+    }
     return true;
   }
 }
