@@ -24,6 +24,27 @@ void updateMatrixDisplay(byte matrix[]) {
   }
 }
 // Graphics
+byte exclamationMark[matrixSize] = {
+  B00000000,
+  B00001000,
+  B00000000,
+  B00001000,
+  B00001000,
+  B00001000,
+  B00001000,
+  B00000000
+};
+byte questionMark[matrixSize] = {
+  B00000000,
+  B00001000,
+  B00000000,
+  B00001000,
+  B00001000,
+  B00010000,
+  B00010100,
+  B00011100
+}; 
+
 byte down[matrixSize] = {
   B00000000,
   B00011000,

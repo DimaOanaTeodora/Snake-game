@@ -6,16 +6,11 @@
 
 
 - Features:
-- de sincronizat matricea cu sagetile
-- de citit si scris in memorie (high score)
-- ecran cu numele jucatorului doar ca face highscore
+- ecran cu numele jucatorului doar cand face highscore
 - de sincronizat si pus sunetul 
-- ecranul cu alegere de play again
 - de generat sarpele aleatoriu
 - de facut teleportarea
 - de pus sunetul si desenul de final 
-- game over menu
-- high score menu
 - diferenta de nivel
 
 - cod spatieri

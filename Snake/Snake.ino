@@ -13,10 +13,10 @@ byte matrixByte[matrixSize] = {
   B00000000,
   B00011000,
   B00111100,
-  B01100110,
-  B11000011,
-  B10000001,
-  B00000000,
+  B01111110,
+  B01111110,
+  B01111110,
+  B01101110,
   B00000000
 }; 
 unsigned int long long lastMoved = 0;
@@ -44,8 +44,6 @@ void setup() {
   //resetMemory();
   greetings();
   mainMenu();
-  //enterPlayerName();
-  //playAgain();
   Serial.begin(9600);
 }
 void connectMenus(){
@@ -87,9 +85,10 @@ void changePlayerName(){
      }else if(ifJoystickMovedLeft()){
         currentPlayerNamePosition--;
         writePlayerName();
-     }else if(ifJoystickPressed){
+     }else if(ifJoystickPressed()){
         // write to EEPROM 
         saveHighScore(points, player);
+        enteringPlayerName = false;
         playAgain();
      }
 }
@@ -104,6 +103,7 @@ void answerPlayAgain(){
   }else if(ifJoystickPressed()){
     playAgainScreen = false;
     enteringPlayerName = false;
+    gameHasStarted = false;
     mainMenuOpened = true;
     mainMenu();
     updateMainMenu();
@@ -111,11 +111,7 @@ void answerPlayAgain(){
 }
 void loop() {
   readFromJoystick();
-   /*if(millis() - lastMoved > moveMenuInterval){
-     //changePlayerName();
-     //answerPlayAgain();
-     lastMoved = millis();
-    }*/
+  
   if(!gameHasStarted){
     // menu && settings
     if(millis() - lastMoved > moveMenuInterval){
@@ -125,11 +121,17 @@ void loop() {
   }else{
     if(enteringPlayerName){
       //we have a new high score
-      changePlayerName(); 
+      if(millis() - lastMoved > moveMenuInterval){
+       changePlayerName(); 
+       lastMoved = millis();
+      }
     }else if(playAgainScreen){
-      //game over
-      //play again or go to menu
-      answerPlayAgain();
+       //game over
+       //play again or go to menu
+       if(millis() - lastMoved > moveMenuInterval){
+       answerPlayAgain(); 
+       lastMoved = millis();
+      }
     }else{
       // during the game
       if(millis() - lastMoved > moveGameInterval){

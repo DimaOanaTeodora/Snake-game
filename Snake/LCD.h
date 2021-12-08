@@ -58,12 +58,13 @@ void congrats(int points) {
 }
 void congratsHighScore(int points) {
   lcd.clear();
-  
-  lcd.setCursor(1, 0);
-  lcd.print(points);
 
-  lcd.setCursor(4, 0);
-  lcd.print("~New high score!~");
+  lcd.setCursor(1, 0);
+  lcd.print("New high score");
+  
+  lcd.setCursor(4, 1);
+  lcd.print(points);
+  lcd.print(" points");
  
   // heart updateMatrixDisplay(hi); - TODO
   delay(2500);

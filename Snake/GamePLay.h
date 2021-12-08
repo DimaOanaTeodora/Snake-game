@@ -164,6 +164,8 @@ void gameOver(){
     congratsHighScore(points);
     enteringPlayerName = true;
     enterPlayerName();
+  }else{
+    playAgain();
   }
 }
 void updateSnakePosition(){
