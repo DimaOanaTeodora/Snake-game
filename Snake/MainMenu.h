@@ -6,9 +6,11 @@ String mainMenuOptions[]={"START", "HIGH SCORE", "SETTINGS", "ABOUT"};
 bool mainMenuOpened = false;
 bool subMainMenuOpened = false;
 
+// Functions
 void mainMenu(){
   subMainMenuOpened = false;
   mainMenuOpened = true;
+  
   lcd.clear();
   lcd.setCursor(1,0);
   lcd.print("Move to scroll");
@@ -43,21 +45,21 @@ void changeSubMainMenu(){
   }
 }
 void updateMainMenu(){
-   if(ifJoystickMovedDown()){
+   if(joystickMovedDown()){
         currentMainMenu ++;
         if(currentMainMenu > 3){
           currentMainMenu = 0;
         }
         mainMenu();
-    }else if(ifJoystickMovedUp()){
+    }else if(joystickMovedUp()){
         currentMainMenu --;
         if(currentMainMenu < 0){
           currentMainMenu = 3;
         }
         mainMenu();
-    }else if(ifJoystickMovedRight() && mainMenuOpened){
+    }else if(joystickMovedRight() && mainMenuOpened){
       changeSubMainMenu();
-    }else if(ifJoystickMovedLeft() && subMainMenuOpened){
+    }else if(joystickMovedLeft() && subMainMenuOpened){
       mainMenu();
     }
 }

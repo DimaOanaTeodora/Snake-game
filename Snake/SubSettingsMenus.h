@@ -35,14 +35,12 @@ void contrastMenu(){
   lcd.setCursor(1,1);
   lcd.print("Press for EXIT");
 }
-
 void changeContrast(){
   analogWrite(contrastPin, contrastValue + contrastLevel * 5);
   lcd.setCursor(11, 0);
   lcd.print(contrastLevel);
   lcd.print("/3");
 }
-
 
 // LCD BRIGHTNESS
 void brightnessMenu(){
@@ -61,7 +59,7 @@ void changeBrightness(){
   lcd.print("/3");
 }
 
-//MATRIX BRIGHTNESS - TODO
+//MATRIX BRIGHTNESS 
 void matrixIntensityMenu(){
   lc.setIntensity(0, matrixIntensityValue + matrixIntensityLevel);
   

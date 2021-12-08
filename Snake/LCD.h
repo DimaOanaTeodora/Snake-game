@@ -1,3 +1,4 @@
+#include <LiquidCrystal.h>
 //Variables
 const int RS = 13;
 const int enable = 8;
@@ -19,7 +20,6 @@ byte maxInterval = 3;
 //Functions
 void enterPlayerName(){
   lcd.clear();
-  
   lcd.setCursor(3, 0);
   lcd.print("Name: ");
   lcd.print("____");
@@ -33,7 +33,6 @@ void updatePlayerName(String playerName){
 }
 void greetings() {
   lcd.clear();
-  
   lcd.setCursor(4, 0);
   lcd.print("~SNAKE~");
   
@@ -45,7 +44,6 @@ void greetings() {
 }
 void congrats(int points) {
   lcd.clear();
-  
   lcd.setCursor(3, 0);
   lcd.print("Congrats!");
   
@@ -58,7 +56,6 @@ void congrats(int points) {
 }
 void congratsHighScore(int points) {
   lcd.clear();
-
   lcd.setCursor(1, 0);
   lcd.print("New high score");
   
@@ -71,7 +68,6 @@ void congratsHighScore(int points) {
 }
 void playAgain(){
   lcd.clear();
-  
   lcd.setCursor(2, 0);
   lcd.print("Play again?");
   
@@ -81,11 +77,10 @@ void playAgain(){
   lcd.setCursor(9, 1);
   lcd.print("N-press");
 
-  // ? - updateMatrixDisplay(hi); - TODO
+  updateMatrixDisplay(questionMark);
 }
 void game(){
   lcd.clear();
-  
   lcd.setCursor(0, 0);
   lcd.print("Level ");
   lcd.print(1);

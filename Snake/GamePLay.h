@@ -24,10 +24,51 @@ int bodyCol = -1;
 int level = 1;
 int points = 0;
 
+String player = "____";
+String alphabet = "abcdefghijklmnopqrstuvwxyz";
+byte alphabetLength = 26;
+int currentLetterPosition = -1;
+int currentPlayerNamePosition = 0;
+
 bool enteringPlayerName = false;
 bool playAgainScreen = false;
 
 //Functions
+void writePlayerName(){
+  if(currentLetterPosition >= alphabetLength){
+     currentLetterPosition = 0;
+  }else if(currentLetterPosition < 0){
+    currentLetterPosition = alphabetLength - 1;
+  }
+  if(currentPlayerNamePosition >= 4){
+     currentPlayerNamePosition = 0;
+  }else if(currentPlayerNamePosition < 0){
+    currentPlayerNamePosition = 3;
+  }
+  player[currentPlayerNamePosition] = alphabet[currentLetterPosition];
+  updatePlayerName(player);
+}
+void changePlayerName(){
+     if(joystickMovedUp()){
+        currentLetterPosition++;
+        writePlayerName();
+     }else if(joystickMovedDown()){
+        currentLetterPosition--;
+        writePlayerName();
+     }else if(joystickMovedRight()){
+        currentPlayerNamePosition++;
+        writePlayerName();
+     }else if(joystickMovedLeft()){
+        currentPlayerNamePosition--;
+        writePlayerName();
+     }else if(joystickPressed()){
+        // write to EEPROM 
+        saveHighScore(points, player);
+        enteringPlayerName = false;
+        playAgain();
+     }
+}
+
 void generateSnake(){
   snakeLength = 3;
   snakeRow[0] = 1;
@@ -151,12 +192,6 @@ bool suicide(){
   }
   return false;
 }
-String player = "____";
-String alphabet = "abcdefghijklmnopqrstuvwxyz";
-byte alphabetLength = 26;
-int currentLetterPosition = -1;
-int currentPlayerNamePosition = 0;
-
 void gameOver(){
   congrats(points);
   playAgainScreen = true;
@@ -169,7 +204,7 @@ void gameOver(){
   }
 }
 void updateSnakePosition(){
-  if(ifJoystickMovedUp()){
+  if(joystickMovedUp()){
     // TODO teleportare
 
     // GAME OVER CONDITIONS
@@ -180,7 +215,7 @@ void updateSnakePosition(){
       moveTheSnake(snakeRow[snakeLength - 1] + 1, true);
       eatFood();
     }
-  }else if(ifJoystickMovedDown()){
+  }else if(joystickMovedDown()){
     if(suicide()){
       gameOver();
       //resetGame();
@@ -188,7 +223,7 @@ void updateSnakePosition(){
       moveTheSnake(snakeRow[snakeLength - 1] - 1, true);
       eatFood();
     }
-  }else if(ifJoystickMovedRight()){
+  }else if(joystickMovedRight()){
     if(suicide()){
       gameOver();
       //resetGame();
@@ -196,7 +231,7 @@ void updateSnakePosition(){
       moveTheSnake(snakeCol[snakeLength - 1] - 1, false);
       eatFood();
     }
-  }else if(ifJoystickMovedLeft()){
+  }else if(joystickMovedLeft()){
     // the body is to the left of the head
     if(suicide()){
       gameOver();

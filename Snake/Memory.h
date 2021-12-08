@@ -68,23 +68,3 @@ void saveHighScore(int highScore, String playerName){
   writeNewHighScoreToEEPROM(highScore);
   writeNewStringNameToEEPROM(playerName);
 }
-void setupMemory() {
-  resetMemory();
-  saveHighScore(50, "Ana");
-  saveHighScore(100, "Ionela");
-  saveHighScore(150, "Ion");
-  saveHighScore(155, "Marinela");
-
-  Serial.print("Locul 1: ");
-  Serial.print(EEPROM.read(0));
-  Serial.print(" ");
-  Serial.println(readStringFromEEPROM(3));
-  Serial.print("Locul 2: ");
-  Serial.print(EEPROM.read(1));
-  Serial.print(" ");
-  Serial.println(readStringFromEEPROM(4));
-  Serial.print("Locul 3: ");
-  Serial.print(EEPROM.read(2));
-  Serial.print(" ");
-  Serial.println(readStringFromEEPROM(5));
-}

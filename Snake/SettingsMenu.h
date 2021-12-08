@@ -10,6 +10,7 @@ bool subSettingsMenuOpened = false;
 void settingsMenu(){
   subSettingsMenuOpened = false;
   settingsMenuOpened = true;
+  
   lcd.clear();
   lcd.setCursor(3,0);
   lcd.print("Settings");
@@ -26,6 +27,7 @@ void settingsMenu(){
 }
 void changeSubSettingsMenu(){
   subSettingsMenuOpened = true;
+  
   switch (currentSettingsMenu) {
   case 0:
     difficultyMenu();
@@ -50,79 +52,79 @@ void changeSubSettingsMenu(){
 void changeValuesSubSettingsMenu(){
   switch (currentSettingsMenu) {
   case 0:
-    if(ifJoystickMovedRight() && difficultyLevel < maxInterval){
+    if(joystickMovedRight() && difficultyLevel < maxInterval){
         difficultyLevel ++;
         difficultyMenu();
-    }else if(ifJoystickMovedLeft() && difficultyLevel > minInterval){
+    }else if(joystickMovedLeft() && difficultyLevel > minInterval){
         difficultyLevel --;
         difficultyMenu();
     }
     break;
   case 1:
-    if(ifJoystickMovedRight() && soundLevel < maxInterval){
+    if(joystickMovedRight() && soundLevel < maxInterval){
         soundLevel ++;
         changeSound();
-    }else if(ifJoystickMovedLeft() && soundLevel > minInterval){
+    }else if(joystickMovedLeft() && soundLevel > minInterval){
         soundLevel --;
         changeSound();
     }
     break;
   case 2:
-    if(ifJoystickMovedRight() && contrastLevel < maxInterval){
+    if(joystickMovedRight() && contrastLevel < maxInterval){
         contrastLevel ++;
         changeContrast();
-    }else if(ifJoystickMovedLeft() && contrastLevel > minInterval){
+    }else if(joystickMovedLeft() && contrastLevel > minInterval){
         contrastLevel --;
         changeContrast();
     }
     break;
   case 3:
-    if(ifJoystickMovedRight() && brightnessLevel < maxInterval){
+    if(joystickMovedRight() && brightnessLevel < maxInterval){
         brightnessLevel ++;
         changeBrightness();
-    }else if(ifJoystickMovedLeft() && brightnessLevel > minInterval){
+    }else if(joystickMovedLeft() && brightnessLevel > minInterval){
         brightnessLevel --;
         changeBrightness();
     }
     break;
   case 4:
-    if(ifJoystickMovedRight() && matrixIntensityLevel < maxInterval){
+    if(joystickMovedRight() && matrixIntensityLevel < maxInterval){
         matrixIntensityLevel ++;
         matrixIntensityMenu();
-    }else if(ifJoystickMovedLeft() && matrixIntensityLevel > minInterval){
+    }else if(joystickMovedLeft() && matrixIntensityLevel > minInterval){
         matrixIntensityLevel --;
         matrixIntensityMenu();
     }
     break;
   }
 }
+
 // BACK 
 void back(){
    settingsMenuOpened = false;
    subSettingsMenuOpened = false;
 }
-
 void updateSettingsMenu(){
     if(subSettingsMenuOpened == true){
       changeValuesSubSettingsMenu();
-      if(ifJoystickPressed()){
+      if(joystickPressed()){
         settingsMenu();
       }
-    }else if(ifJoystickMovedDown()){
+    }else if(joystickMovedDown()){
         currentSettingsMenu ++;
         if(currentSettingsMenu > 5){
           currentSettingsMenu = 0;
         }
         settingsMenu();
-    }else if(ifJoystickMovedUp()){
+    }else if(joystickMovedUp()){
         currentSettingsMenu --;
         if(currentSettingsMenu < 0){
           currentSettingsMenu = 5;
         }
         settingsMenu();
-    }else if(ifJoystickMovedRight() && settingsMenuOpened){
+    }else if(joystickMovedRight() && settingsMenuOpened){
       changeSubSettingsMenu();
-    }else if(ifJoystickMovedLeft() && subSettingsMenuOpened){
+    }else if(joystickMovedLeft() && subSettingsMenuOpened){
         settingsMenu();
     }
 }

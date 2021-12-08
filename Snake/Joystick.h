@@ -17,13 +17,13 @@ void readFromJoystick(){
   yValue = analogRead(joyY);
   switchState = digitalRead(pinSw);
 }
-bool ifJoystickPressed(){
+bool joystickPressed(){
    if(switchState == LOW){
       return true;
    }
    return false;
 }
-bool ifJoystickMovedUp(){
+bool joystickMovedUp(){
   if(yValue >= minTreshold){
     return false;
   }else if(yValue < minTreshold){
@@ -33,7 +33,7 @@ bool ifJoystickMovedUp(){
     return true;
   }
 }
-bool ifJoystickMovedDown(){
+bool joystickMovedDown(){
   if(yValue <= maxTreshold){
     return false;
   }else if(yValue > maxTreshold){
@@ -43,7 +43,7 @@ bool ifJoystickMovedDown(){
     return true;
   }
 }
-bool ifJoystickMovedRight(){
+bool joystickMovedRight(){
   if(xValue <= maxTreshold){
     return false;
   }else if(xValue > maxTreshold){
@@ -53,7 +53,7 @@ bool ifJoystickMovedRight(){
     return true;
   }
 }
-bool ifJoystickMovedLeft(){
+bool joystickMovedLeft(){
   if(xValue >= minTreshold){
     return false;
   }else if(xValue < minTreshold){

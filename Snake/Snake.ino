@@ -1,4 +1,3 @@
-#include <LiquidCrystal.h>
 #include"Memory.h"
 #include"Matrix.h"
 #include"Sound.h"
@@ -9,6 +8,7 @@
 #include"SettingsMenu.h"
 #include"SubMainMenus.h"
 #include"MainMenu.h"
+
 byte matrixByte[matrixSize] = {
   B00000000,
   B00011000,
@@ -46,61 +46,15 @@ void setup() {
   mainMenu();
   Serial.begin(9600);
 }
-void connectMenus(){
-  if(mainMenuOpened){
-    updateMainMenu();
-  }else if(settingsMenuOpened){
-    if(ifJoystickMovedRight() && subSettingsMenuOpened == false && currentSettingsMenu == 5){
-        back();
-        mainMenu();
-    }else{
-      updateSettingsMenu();
-    }
-  }
-}
-void writePlayerName(){
-  if(currentLetterPosition >= alphabetLength){
-     currentLetterPosition = 0;
-  }else if(currentLetterPosition < 0){
-    currentLetterPosition = alphabetLength - 1;
-  }
-  if(currentPlayerNamePosition >= 4){
-     currentPlayerNamePosition = 0;
-  }else if(currentPlayerNamePosition < 0){
-    currentPlayerNamePosition = 3;
-  }
-  player[currentPlayerNamePosition] = alphabet[currentLetterPosition];
-  updatePlayerName(player);
-}
-void changePlayerName(){
-     if(ifJoystickMovedUp()){
-        currentLetterPosition++;
-        writePlayerName();
-     }else if(ifJoystickMovedDown()){
-        currentLetterPosition--;
-        writePlayerName();
-     }else if(ifJoystickMovedRight()){
-        currentPlayerNamePosition++;
-        writePlayerName();
-     }else if(ifJoystickMovedLeft()){
-        currentPlayerNamePosition--;
-        writePlayerName();
-     }else if(ifJoystickPressed()){
-        // write to EEPROM 
-        saveHighScore(points, player);
-        enteringPlayerName = false;
-        playAgain();
-     }
-}
 void answerPlayAgain(){
-  if(ifJoystickMovedUp() || ifJoystickMovedDown() || ifJoystickMovedRight() || ifJoystickMovedLeft()){
+  if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
     playAgainScreen = false;
     enteringPlayerName = false;
     gameHasStarted = true;
     start();
     game();
     resetGame();
-  }else if(ifJoystickPressed()){
+  }else if(joystickPressed()){
     playAgainScreen = false;
     enteringPlayerName = false;
     gameHasStarted = false;
@@ -109,9 +63,19 @@ void answerPlayAgain(){
     updateMainMenu();
   }
 }
-void loop() {
-  readFromJoystick();
-  
+void connectMenus(){
+  if(mainMenuOpened){
+    updateMainMenu();
+  }else if(settingsMenuOpened){
+    if(joystickMovedRight() && subSettingsMenuOpened == false && currentSettingsMenu == 5){
+        back();
+        mainMenu();
+    }else{
+      updateSettingsMenu();
+    }
+  }
+}
+void changeState(){
   if(!gameHasStarted){
     // menu && settings
     if(millis() - lastMoved > moveMenuInterval){
@@ -141,4 +105,9 @@ void loop() {
       }
     }
   }
+}
+void loop() {
+  readFromJoystick();
+  
+  changeState();
 }

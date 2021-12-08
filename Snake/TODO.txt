@@ -1,16 +1,14 @@
 - Bugs:
-- cand se schimba dupa greetings face urat
-- si la about e aceeasi problema
 - trebuie apasat butonul mai mult
 - uneori mancarea nu mai apare
+- ramane sarpele la final in meniul de ales de continuare
 
 
 - Features:
-- ecran cu numele jucatorului doar cand face highscore
 - de sincronizat si pus sunetul 
 - de generat sarpele aleatoriu
 - de facut teleportarea
-- de pus sunetul si desenul de final 
+- de pus sunetul si desenele de final 
 - diferenta de nivel
 
 - cod spatieri
