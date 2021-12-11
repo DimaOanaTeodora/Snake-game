@@ -1,39 +1,5 @@
-// Variables
-String difficulty[] ={"LOW", "MEDIUM", "HIGH"};
-byte difficultyLevel = 1;
-
-int snakeLength = 3;
-int snakeRow[32];
-int snakeCol[32];
-
-int tailRow = -1;
-int tailCol = -1;
-
-int foodRow = -1;
-int foodCol = -1;
-
-int lastFoodRow = -1;
-int lastFoodCol = -1;
-
-int headRow = -1;
-int headCol = -1;
-
-int bodyRow = -1;
-int bodyCol = -1;
-
-int level = 1;
-int points = 0;
-
-String player = "____";
-String alphabet = "abcdefghijklmnopqrstuvwxyz";
-byte alphabetLength = 26;
-int currentLetterPosition = -1;
-int currentPlayerNamePosition = 0;
-
-bool enteringPlayerName = false;
-bool playAgainScreen = false;
-
 //Functions
+
 void writePlayerName(){
   if(currentLetterPosition >= alphabetLength){
      currentLetterPosition = 0;
@@ -68,58 +34,21 @@ void changePlayerName(){
         playAgain();
      }
 }
-
-void generateSnake(){
-  snakeLength = 3;
-  snakeRow[0] = 1;
-  snakeRow[1] = 1;
-  snakeRow[2] = 1;
-  snakeCol[0] = 1;
-  snakeCol[1] = 2;
-  snakeCol[2] = 3;
-}
-void showSnake(){
-  if(tailRow != -1 && tailCol != -1){
-    lc.setLed(0, tailRow, tailCol, false);
-  }
-  for(int i=0; i< snakeLength; i++){
-     lc.setLed(0, snakeRow[i], snakeCol[i], true);
-  }
-}
-void showFood(){
-  if(lastFoodRow != -1 && lastFoodCol != -1){
-      lc.setLed(0, lastFoodRow, lastFoodCol, false);
-  }
-  lc.setLed(0, foodRow, foodCol, true);
-}
-bool isPartOfSnake(int row, int col){
-  for(int i = 0; i < snakeLength; i++){
-     if(snakeRow[i] == row && snakeCol[i] == col){
-      return true;
-     }
-  }
-  return false;
-}
-void generateFood(){
-  int row; 
-  int col; 
-  
-  do{ 
-    row = random(0, matrixSize);
-    col = random(0, matrixSize);
-  }while(isPartOfSnake(row, col));
-  
-  lastFoodRow = foodRow;
-  lastFoodCol = foodCol;
-  foodRow = row;
-  foodCol = col;
-}
 void resetGame(){
   lc.clearDisplay(0);
   enteringPlayerName = false;
   level = 1;
   points = 0; 
   game(); //reset LCD
+
+  // generate obstacles depending on the level 
+  if(difficultyLevel == 2){
+    tinyObstacles();
+    showWalls();
+  }else if(difficultyLevel == 3){
+    cornerWalls();
+    showWalls();
+  }
   generateSnake();
   generateFood();
   showSnake();
@@ -142,7 +71,7 @@ void moveTheSnake(int newValue, bool row){
       }
   }
 }
-void newSnake(){
+void updateSnake(){
   for(int i = snakeLength-1; i > 0; i--){
     snakeRow[i + 1] = snakeRow[i];
     snakeCol[i + 1] = snakeCol[i];
@@ -171,22 +100,37 @@ void eatFood(){
    headCol = snakeCol[snakeLength - 1];
    
    if(headRow == foodRow && headCol == foodCol){
-        points ++;
+        if(difficultyLevel == 3){
+          points += 10;
+        }else if(difficultyLevel == 2){
+          points += 5;
+        }else{
+          points ++; 
+        }
         level ++;
         updateGame(level, points);//update LCD with score
         // generate new food && new snake
-        newSnake();
+        updateSnake();
         showSnake();
         generateFood();
         showFood();
    }
 }
-bool suicide(){
+
+bool dead(){
   headRow = snakeRow[snakeLength - 1];
   headCol = snakeCol[snakeLength - 1];
 
+  // suicide
   for(int i = 0; i < snakeLength - 1; i++){
     if(snakeRow[i] == headRow && snakeCol[i] == headCol){
+      return true;
+    }
+  }
+  
+  // hit the obstacle
+  for(int i = 0; i< numberOfWalls; i++){
+    if(wallsRow[i] == headRow && wallsCol[i] == headCol){
       return true;
     }
   }
@@ -203,42 +147,23 @@ void gameOver(){
     playAgain();
   }
 }
+void moveGame(int nextPosition, bool directionRow){
+  if(dead()){
+      gameOver();
+    }else{ 
+      moveTheSnake(nextPosition, directionRow);
+      eatFood();
+   }
+}
 void updateSnakePosition(){
   if(joystickMovedUp()){
     // TODO teleportare
-
-    // GAME OVER CONDITIONS
-    if(suicide()){
-      gameOver();
-      //resetGame();
-    }else{ 
-      moveTheSnake(snakeRow[snakeLength - 1] + 1, true);
-      eatFood();
-    }
+    moveGame(snakeRow[snakeLength - 1] + 1, true);
   }else if(joystickMovedDown()){
-    if(suicide()){
-      gameOver();
-      //resetGame();
-    }else{
-      moveTheSnake(snakeRow[snakeLength - 1] - 1, true);
-      eatFood();
-    }
+    moveGame(snakeRow[snakeLength - 1] - 1, true);
   }else if(joystickMovedRight()){
-    if(suicide()){
-      gameOver();
-      //resetGame();
-    }else{
-      moveTheSnake(snakeCol[snakeLength - 1] - 1, false);
-      eatFood();
-    }
+    moveGame(snakeCol[snakeLength - 1] - 1, false);
   }else if(joystickMovedLeft()){
-    // the body is to the left of the head
-    if(suicide()){
-      gameOver();
-      //resetGame();
-    }else{
-      moveTheSnake(snakeCol[snakeLength - 1] + 1, false);
-      eatFood();
-    }
+    moveGame(snakeCol[snakeLength - 1] + 1, false);
   }
 }

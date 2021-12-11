@@ -61,11 +61,8 @@ void changeValuesSubSettingsMenu(){
     }
     break;
   case 1:
-    if(joystickMovedRight() && soundLevel < maxInterval){
-        soundLevel ++;
-        changeSound();
-    }else if(joystickMovedLeft() && soundLevel > minInterval){
-        soundLevel --;
+    if(joystickMovedRight() || joystickMovedLeft()){
+        mute = !mute;
         changeSound();
     }
     break;

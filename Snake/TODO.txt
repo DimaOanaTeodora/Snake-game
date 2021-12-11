@@ -2,14 +2,19 @@
 - trebuie apasat butonul mai mult
 - uneori mancarea nu mai apare
 - ramane sarpele la final in meniul de ales de continuare
-
+- buguri de la final de joc
+- bug la sarpele de lungime 2 cand mananca prima oara
+- la MEDIUM imi genereaza mereu alti pereti la cei care sunt deja
 
 - Features:
 - de sincronizat si pus sunetul 
-- de generat sarpele aleatoriu
 - de facut teleportarea
 - de pus sunetul si desenele de final 
-- diferenta de nivel
+- de salvat contrast, brightness, level si sound in EEPROM
+- de scos faza cu sarpele care se sinucide cu capul invers
+- la congrats sa fie tot cu move
+- creste viteza la level 1
+
 
 - cod spatieri
 - optimizari 

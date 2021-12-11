@@ -1,7 +1,7 @@
 #include <LiquidCrystal.h>
 //Variables
-const int RS = 13;
-const int enable = 8;
+const int RS = 12; //13
+const int enable = 11;//8;
 const int d4 = 5;
 const int d5 = 4;
 const int d6 = 3;
@@ -10,10 +10,10 @@ const byte contrastPin = 6;
 const byte brightnessPin = 9;
 LiquidCrystal lcd(RS, enable, d4, d5, d6, d7);
 
-int contrastValue= 105;
+int contrastValue= 70;
 int brightnessValue = 28836;
 byte brightnessLevel = 2;
-byte contrastLevel = 1;
+byte contrastLevel = 2;
 byte minInterval = 1;
 byte maxInterval = 3;
 

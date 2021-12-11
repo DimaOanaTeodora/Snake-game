@@ -3,6 +3,8 @@
 #include"Sound.h"
 #include"LCD.h"
 #include"Joystick.h"
+#include"Objects.h"
+#include"ShowObjects.h"
 #include"GamePlay.h"
 #include"SubSettingsMenus.h"
 #include"SettingsMenu.h"
@@ -107,6 +109,7 @@ void changeState(){
   }
 }
 void loop() {
+  //tone(A2, 200, 500);
   readFromJoystick();
   
   changeState();

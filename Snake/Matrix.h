@@ -6,8 +6,8 @@
  * (0,7)......(0,0)
 */
 // LED matrix
-const int dinPin = 12;
-const int clockPin = 11;
+const int dinPin = 13; //12
+const int clockPin = 8;//11;
 const int loadPin = 10;
 
 LedControl lc = LedControl(dinPin, clockPin, loadPin, 1); //DIN, CLK, LOAD, No. DRIVER

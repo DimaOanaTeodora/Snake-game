@@ -14,16 +14,20 @@ void difficultyMenu(){
 //SOUND
 void soundMenu(){
   lcd.clear();
-  lcd.setCursor(0,0);
-  lcd.print("Sound level ");
-
+  lcd.setCursor(4,0);
+  lcd.print("UNMUTE");
   lcd.setCursor(1,1);
   lcd.print("Press for EXIT");
 }
 void changeSound(){
-  lcd.setCursor(12, 0);
-  lcd.print(soundLevel);
-  lcd.print("/3");
+  lcd.setCursor(4,0);
+  lcd.print("      ");
+  lcd.setCursor(4,0);
+  if(mute){
+     lcd.print("MUTE");
+  }else{
+     lcd.print("UNMUTE");
+  }
 }
 
 // LCD CONTRAST
@@ -36,7 +40,7 @@ void contrastMenu(){
   lcd.print("Press for EXIT");
 }
 void changeContrast(){
-  analogWrite(contrastPin, contrastValue + contrastLevel * 5);
+  analogWrite(contrastPin, contrastValue + contrastLevel * 16);
   lcd.setCursor(11, 0);
   lcd.print(contrastLevel);
   lcd.print("/3");
