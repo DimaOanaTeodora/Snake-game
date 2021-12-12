@@ -1,13 +1,13 @@
 //Variables
-int currentSettingsMenu = 0; // [0,5] 
-
 String settingsMenuOptions []={"DIFFICULTY", "SOUND", "LCD CONTRAST", "LCD BRIGHT", "MATRIX BRIGHT", "BACK"};
+int currentSettingsMenu = 0; // [0,5] 
 
 bool settingsMenuOpened = false;
 bool subSettingsMenuOpened = false;
 
 // Functions
 void settingsMenu(){
+  // LCD screen 
   subSettingsMenuOpened = false;
   settingsMenuOpened = true;
   
@@ -26,6 +26,7 @@ void settingsMenu(){
   lcd.print(settingsMenuOptions[currentSettingsMenu]);
 }
 void changeSubSettingsMenu(){
+  // switch submenus on the LCD
   subSettingsMenuOpened = true;
   
   switch (currentSettingsMenu) {
@@ -50,6 +51,7 @@ void changeSubSettingsMenu(){
   }
 }
 void changeValuesSubSettingsMenu(){
+  // change the option value(levels) in a submenu of the settings menu
   switch (currentSettingsMenu) {
   case 0:
     if(joystickMovedRight() && difficultyLevel < maxInterval){
@@ -95,13 +97,13 @@ void changeValuesSubSettingsMenu(){
     break;
   }
 }
-
 // BACK 
 void back(){
    settingsMenuOpened = false;
    subSettingsMenuOpened = false;
 }
 void updateSettingsMenu(){
+    // iterate through settings menu options 
     if(subSettingsMenuOpened == true){
       changeValuesSubSettingsMenu();
       if(joystickPressed()){
@@ -120,7 +122,7 @@ void updateSettingsMenu(){
         }
         settingsMenu();
     }else if(joystickMovedRight() && settingsMenuOpened){
-      changeSubSettingsMenu();
+        changeSubSettingsMenu();
     }else if(joystickMovedLeft() && subSettingsMenuOpened){
         settingsMenu();
     }

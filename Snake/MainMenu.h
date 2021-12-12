@@ -1,13 +1,13 @@
 //Variables
-int currentMainMenu = 0; // [0,3]
-
 String mainMenuOptions[]={"START", "HIGH SCORE", "SETTINGS", "ABOUT"};
+int currentMainMenu = 0; // [0,3]
 
 bool mainMenuOpened = false;
 bool subMainMenuOpened = false;
 
 // Functions
 void mainMenu(){
+  // LCD screen
   subMainMenuOpened = false;
   mainMenuOpened = true;
   
@@ -24,6 +24,7 @@ void mainMenu(){
   lcd.print(mainMenuOptions[currentMainMenu]);
 }
 void changeSubMainMenu(){
+  // switch submenus on the LCD 
   subMainMenuOpened = true;
   switch (currentMainMenu) {
   case 0:
@@ -45,6 +46,7 @@ void changeSubMainMenu(){
   }
 }
 void updateMainMenu(){
+  // iterate through main menu options 
    if(joystickMovedDown()){
         currentMainMenu ++;
         if(currentMainMenu > 3){
@@ -58,8 +60,8 @@ void updateMainMenu(){
         }
         mainMenu();
     }else if(joystickMovedRight() && mainMenuOpened){
-      changeSubMainMenu();
+        changeSubMainMenu();
     }else if(joystickMovedLeft() && subMainMenuOpened){
-      mainMenu();
+        mainMenu();
     }
 }

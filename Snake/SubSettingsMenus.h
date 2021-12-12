@@ -3,14 +3,11 @@ void difficultyMenu(){
   lcd.clear();
   lcd.setCursor(1,0);
   lcd.print("Mode ");
-
   lcd.setCursor(7, 0);
   lcd.print(difficulty[difficultyLevel-1]);
-  
   lcd.setCursor(1,1);
   lcd.print("Press for EXIT");
 }
-
 //SOUND
 void soundMenu(){
   lcd.clear();
@@ -29,13 +26,11 @@ void changeSound(){
      lcd.print("UNMUTE");
   }
 }
-
 // LCD CONTRAST
 void contrastMenu(){
   lcd.clear();
   lcd.setCursor(1,0);
   lcd.print("Contrast ");
-
   lcd.setCursor(1,1);
   lcd.print("Press for EXIT");
 }
@@ -45,14 +40,11 @@ void changeContrast(){
   lcd.print(contrastLevel);
   lcd.print("/3");
 }
-
 // LCD BRIGHTNESS
 void brightnessMenu(){
-  //currentSubMenu = 0;
   lcd.clear();
   lcd.setCursor(1,0);
   lcd.print("Brightness ");
-
   lcd.setCursor(1,1);
   lcd.print("Press for EXIT");
 }
@@ -62,19 +54,15 @@ void changeBrightness(){
   lcd.print(brightnessLevel);
   lcd.print("/3");
 }
-
 //MATRIX BRIGHTNESS 
 void matrixIntensityMenu(){
   lc.setIntensity(0, matrixIntensityValue + matrixIntensityLevel);
-  
   lcd.clear();
   lcd.setCursor(1,0);
   lcd.print("Intensity ");
-
   lcd.setCursor(11, 0);
   lcd.print(matrixIntensityLevel);
   lcd.print("/3");
-  
   lcd.setCursor(1,1);
   lcd.print("Press for EXIT");
 }

@@ -23,7 +23,6 @@ void start() {
 
   gameHasStarted = true;
 }
-
 //HIGH SCORE 
 void highScore(){
   lcd.clear();
@@ -63,7 +62,6 @@ void highScore(){
   lcd.setCursor(5, 0);
   lcd.print("<<back");
 }
-
 // ABOUT
 void about(){
   lcd.clear();

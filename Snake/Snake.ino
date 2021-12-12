@@ -12,18 +12,20 @@
 #include"MainMenu.h"
 
 byte matrixByte[matrixSize] = {
+  B11111111,
+  B11100111,
+  B11000011,
+  B10000001,
   B00000000,
-  B00011000,
-  B00111100,
-  B01111110,
-  B01111110,
-  B01111110,
-  B01101110,
-  B00000000
+  B00000000,
+  B10011001,
+  B11111111
 }; 
 unsigned int long long lastMoved = 0;
+unsigned int long long lastMoved2 = 0;
 const int moveMenuInterval = 250;
 const int moveGameInterval = 100;
+const int switchHeartInterval = 500;
 
 void setup() {
   lc.shutdown(0, false); 
@@ -47,6 +49,19 @@ void setup() {
   greetings();
   mainMenu();
   Serial.begin(9600);
+}
+void exitCongratsHighScoreScreen(){
+  if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
+    congratsHighScoreScreen = false;
+    enterPlayerName();
+  }
+}
+void exitCongratsScreen(){
+  if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
+    congratsScreen = false;
+    playAgainScreen = true;
+    playAgain();
+  }
 }
 void answerPlayAgain(){
   if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
@@ -77,6 +92,13 @@ void connectMenus(){
     }
   }
 }
+void switchHeart(){
+  if(millis() - lastMoved2 > switchHeartInterval){
+       // changing heart animation
+       animation();
+       lastMoved2 = millis();
+  }
+}
 void changeState(){
   if(!gameHasStarted){
     // menu && settings
@@ -85,7 +107,21 @@ void changeState(){
      lastMoved = millis();
     }
   }else{
-    if(enteringPlayerName){
+    if(congratsScreen){
+      //the game is over but we don't have a new high score
+      switchHeart(); 
+      if(millis() - lastMoved > moveMenuInterval){
+       exitCongratsScreen(); 
+       lastMoved = millis();
+      }
+    }else if(congratsHighScoreScreen){
+      //the game is over && we have a new high score
+      switchHeart();
+      if(millis() - lastMoved > moveMenuInterval){
+       exitCongratsHighScoreScreen(); 
+       lastMoved = millis();
+      }
+    }else if(enteringPlayerName){
       //we have a new high score
       if(millis() - lastMoved > moveMenuInterval){
        changePlayerName(); 
@@ -109,7 +145,6 @@ void changeState(){
   }
 }
 void loop() {
-  //tone(A2, 200, 500);
   readFromJoystick();
   
   changeState();

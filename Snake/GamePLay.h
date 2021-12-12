@@ -1,5 +1,8 @@
-//Functions
+// Variables
+bool congratsScreen = false;
+bool congratsHighScoreScreen = false;
 
+//Functions
 void writePlayerName(){
   if(currentLetterPosition >= alphabetLength){
      currentLetterPosition = 0;
@@ -137,14 +140,16 @@ bool dead(){
   return false;
 }
 void gameOver(){
-  congrats(points);
+  //congrats(points);
   playAgainScreen = true;
   if(points > EEPROM.read(0)){
     congratsHighScore(points);
+    congratsHighScoreScreen = true;
     enteringPlayerName = true;
-    enterPlayerName();
+    congratsHighScore(points);
   }else{
-    playAgain();
+    congratsScreen = true;
+    congrats(points);
   }
 }
 void moveGame(int nextPosition, bool directionRow){
