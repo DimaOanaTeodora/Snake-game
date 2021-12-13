@@ -1,7 +1,8 @@
 #include <EEPROM.h>
 /*
  * Save the top 3 high scores and the names
- * EEPROM = HighScore (0,1,2), nameLenght(3,4,5), names(6,k,n) 
+ * EEPROM = 0- leveldifficulty, 1- bright LCD, 2- contrast LCD, 3- bright matrix, 4 -  sound 
+ * HighScore (0,1,2), nameLenght(3,4,5), names(6,k,n) 
  * 
 */
 void writeNewHighScoreToEEPROM(int highScore){

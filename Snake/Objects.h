@@ -3,8 +3,8 @@
 String difficulty[] ={"LOW", "MEDIUM", "HIGH"};
 byte difficultyLevel = 1;
 /* LOW: no obstacles, 1 point/level 
- * MEDIUM: 2 tiny obstacles, 5 points/level
- * HIGH: 4 walls on the corners, 10 points/level
+ * MEDIUM: 2 tiny obstacles, 2 points/level
+ * HIGH: 4 walls on the corners, 5 points/level
  * ++ increase the spead 
  */
 // GAME 
@@ -12,7 +12,7 @@ int level = 1;
 int points = 0;
 
 // SNAKE
-int snakeLength = 3;
+int snakeLength = 2;
 int snakeRow[32];
 int snakeCol[32];
 int tailRow = -1;
@@ -127,13 +127,13 @@ void generateSnake(){
     col = newRandom(0, maxInterval);
   }while(isPartOfObstacle(row, col));
   
-  snakeLength = 3;
+  snakeLength = 2;
   snakeRow[0] = row;
   snakeCol[0] = col;
   snakeRow[1] = row;
   snakeCol[1] = col + 1;
-  snakeRow[2] = row;
-  snakeCol[2] = col + 2;
+  //snakeRow[2] = row;
+  //snakeCol[2] = col + 2;
 }
 bool isPartOfSnake(int row, int col){
   // true if a point(row, col) is part of the snake

@@ -1,18 +1,13 @@
 - Bugs:
 - trebuie apasat butonul mai mult
-- uneori mancarea nu mai apare
-- bug la sarpele de lungime 2 cand mananca prima oara
+- mini blinking la coada cand mananca
 
 - Features:
 - de sincronizat si pus sunetul 
-- de facut teleportarea 
 - de salvat contrast, brightness, level si sound in EEPROM
-- de scos faza cu sarpele care se sinucide cu capul invers
-- creste viteza la level 1
-- new high score intermediar in EEPROM
-- blinking food
 
 - cod spatieri
 - optimizari
 - de scos nr magice
 - de inlocuit int cu byte unde e cazul 
+- centralizare variabile de switching

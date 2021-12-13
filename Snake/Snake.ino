@@ -11,36 +11,24 @@
 #include"SubMainMenus.h"
 #include"MainMenu.h"
 
-byte matrixByte[matrixSize] = {
-  B11111111,
-  B11100111,
-  B11000011,
-  B10000001,
-  B00000000,
-  B00000000,
-  B10011001,
-  B11111111
-}; 
 unsigned int long long lastMoved = 0;
 unsigned int long long lastMoved2 = 0;
+unsigned int long long lastMoved3 = 0;
 const int moveMenuInterval = 250;
-const int moveGameInterval = 100;
 const int switchHeartInterval = 500;
+const int blinkingFoodInterval = 150;
 
 void setup() {
   lc.shutdown(0, false); 
   lc.setIntensity(0, matrixIntensityValue + matrixIntensityLevel);
   lc.clearDisplay(0);
-  
   pinMode(RS, OUTPUT);
   pinMode(joyX, INPUT);
   pinMode(joyY, INPUT);
   pinMode(pinSw, INPUT_PULLUP);
-
   lcd.begin(16, 2);
   lcd.clear();
   lcd.setCursor(0, 0);
-  
   analogWrite(contrastPin, contrastValue);
   analogWrite(brightnessPin, brightnessValue); 
   
@@ -99,6 +87,14 @@ void switchHeart(){
        lastMoved2 = millis();
   }
 }
+bool blinking = false;
+void blinkingFood(){
+   if( millis() - lastMoved3 > blinkingFoodInterval){
+       showFood(blinking);
+       blinking = !blinking; 
+       lastMoved3 = millis();
+  }
+}
 void changeState(){
   if(!gameHasStarted){
     // menu && settings
@@ -136,6 +132,7 @@ void changeState(){
       }
     }else{
       // during the game
+      blinkingFood();
       if(millis() - lastMoved > moveGameInterval){
        updateSnakePosition();
        showSnake();

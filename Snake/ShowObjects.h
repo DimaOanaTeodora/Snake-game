@@ -12,9 +12,13 @@ void showSnake(){
      lc.setLed(0, snakeRow[i], snakeCol[i], true);
   }
 }
-void showFood(){
-  if(lastFoodRow != -1 && lastFoodCol != -1){
+void showFood(bool show){
+  if(isPartOfSnake(lastFoodRow, lastFoodCol)){
+    lc.setLed(0, foodRow, foodCol, show);
+  }else{
+    if(lastFoodRow != -1 && lastFoodCol != -1){
       lc.setLed(0, lastFoodRow, lastFoodCol, false);
+    }
+    lc.setLed(0, foodRow, foodCol, show);
   }
-  lc.setLed(0, foodRow, foodCol, true);
 }

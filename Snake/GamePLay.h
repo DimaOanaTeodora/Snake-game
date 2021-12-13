@@ -1,6 +1,7 @@
 // Variables
 bool congratsScreen = false;
 bool congratsHighScoreScreen = false;
+int moveGameInterval = 110;
 
 //Functions
 void writePlayerName(){
@@ -9,10 +10,11 @@ void writePlayerName(){
   }else if(currentLetterPosition < 0){
     currentLetterPosition = alphabetLength - 1;
   }
+  
   if(currentPlayerNamePosition >= 4){
      currentPlayerNamePosition = 0;
   }else if(currentPlayerNamePosition < 0){
-    currentPlayerNamePosition = 3;
+     currentPlayerNamePosition = 3;
   }
   player[currentPlayerNamePosition] = alphabet[currentLetterPosition];
   updatePlayerName(player);
@@ -42,6 +44,7 @@ void resetGame(){
   enteringPlayerName = false;
   level = 1;
   points = 0; 
+  moveGameInterval = 110;
   game(); //reset LCD
 
   // generate obstacles depending on the level 
@@ -55,48 +58,93 @@ void resetGame(){
   generateSnake();
   generateFood();
   showSnake();
-  showFood();
+  showFood(true);
 }
 void moveTheSnake(int newValue, bool row){
-  tailRow = snakeRow[0];
-  tailCol = snakeCol[0];
+  // move the snake by changing head position
+  // newValue is the new row/column for the head
+ 
+  bodyRow = snakeRow[snakeLength - 2];
+  bodyCol = snakeCol[snakeLength - 2];
+
+  // this condition doesn't let the snake to turn the head 180 degrees and suicide
+  if(!((!row && abs(bodyCol - newValue)==0) || (row && abs(bodyRow - newValue)==0))){
+    tailRow = snakeRow[0];
+    tailCol = snakeCol[0];
+    
+    // teleporting the snake through the walls
+    if(newValue >= 8){
+      newValue = 0;
+    }else if(newValue <= -1){
+      newValue = 7;
+    }
   
-  for(int i = 0; i < snakeLength; i++){
-      if(i == snakeLength - 1){
-        if(row){
-          snakeRow[i] = newValue;
+    for(int i = 0; i < snakeLength; i++){
+        if(i == snakeLength - 1){
+          // Snake HEAD
+          if(row){
+            snakeRow[i] = newValue;
+          }else{
+            snakeCol[i] = newValue;
+          }
         }else{
-          snakeCol[i] = newValue;
+          snakeRow[i] = snakeRow[i + 1];
+          snakeCol[i] = snakeCol[i + 1];
         }
-      }else{
-        snakeRow[i] = snakeRow[i + 1];
-        snakeCol[i] = snakeCol[i + 1];
-      }
+    }
   }
+  
 }
 void updateSnake(){
+  // increase the size of the snake with 1 point attached to the tail
+  int tailRow2, tailCol2;
+
+  snakeLength ++;
   for(int i = snakeLength-1; i > 0; i--){
-    snakeRow[i + 1] = snakeRow[i];
-    snakeCol[i + 1] = snakeCol[i];
+    snakeRow[i] = snakeRow[i - 1];
+    snakeCol[i] = snakeCol[i - 1];
   }
-  if(headCol == bodyCol && headRow == bodyRow - 1){
-      // the body is above the head
-     snakeRow[snakeLength] = snakeRow[snakeLength - 1] + 1;
-     snakeCol[snakeLength] = snakeCol[snakeLength - 1];
-  }else if(headCol == bodyCol && headRow - 1 == bodyRow){
-      // the body is under the head
-      snakeRow[snakeLength] = snakeRow[snakeLength - 1] - 1;
-      snakeCol[snakeLength] = snakeCol[snakeLength - 1];
-   }else if(headRow == bodyRow && headCol - 1 == bodyCol){
-      // the body is to the right of the head
-      snakeRow[snakeLength] = snakeRow[snakeLength - 1];
-      snakeCol[snakeLength] = snakeCol[snakeLength - 1] - 1;
-    }else if(headRow == bodyRow && headCol == bodyCol - 11){
-      // the body is to the left of the head
-      snakeRow[snakeLength] = snakeRow[snakeLength - 1];
-      snakeCol[snakeLength] = snakeCol[snakeLength - 1] + 1;
+
+  tailRow = snakeRow[1];
+  tailCol = snakeCol[1];
+  tailRow2 = snakeRow[2];
+  tailCol2 = snakeCol[2];
+
+  if(tailRow2 == tailRow){
+    if(tailCol < tailCol2){
+      // right
+      snakeRow[0] = tailRow;
+      snakeCol[0] = tailCol - 1;
+    }else{
+      // left
+      snakeRow[0] = tailRow;
+      snakeCol[0] = tailCol + 1;
     }
-    snakeLength ++;
+  }else if(tailCol2 == tailCol){
+    if(tailRow < tailRow2){
+      // under
+      snakeRow[0] = tailRow - 1;
+      snakeCol[0] = tailCol;
+    }else{
+      // above
+      snakeRow[0] = tailRow + 1;
+      snakeCol[0] = tailCol;
+    }
+  }
+  /*
+    Serial.println("Update Snake after");
+    for(int i = 0; i < snakeLength; i++){
+        Serial.print(snakeRow[i]);
+        Serial.print(" ");
+        Serial.print(snakeCol[i]);
+        Serial.print(";");
+    }
+    Serial.println();*/
+}
+void increaseGameSpeed(){
+  if(level == 10 || level == 6 || level == 3){
+    moveGameInterval = moveGameInterval - 20;
+  }
 }
 void eatFood(){
    headRow = snakeRow[snakeLength - 1];
@@ -104,19 +152,20 @@ void eatFood(){
    
    if(headRow == foodRow && headCol == foodCol){
         if(difficultyLevel == 3){
-          points += 10;
-        }else if(difficultyLevel == 2){
           points += 5;
+        }else if(difficultyLevel == 2){
+          points += 2;
         }else{
           points ++; 
         }
         level ++;
+        increaseGameSpeed();
         updateGame(level, points);//update LCD with score
         // generate new food && new snake
         updateSnake();
         showSnake();
         generateFood();
-        showFood();
+        showFood(true);
    }
 }
 
@@ -126,7 +175,7 @@ bool dead(){
 
   // suicide
   for(int i = 0; i < snakeLength - 1; i++){
-    if(snakeRow[i] == headRow && snakeCol[i] == headCol){
+    if(snakeCol[i] == headCol && snakeRow[i] == headRow){
       return true;
     }
   }
@@ -140,7 +189,6 @@ bool dead(){
   return false;
 }
 void gameOver(){
-  //congrats(points);
   playAgainScreen = true;
   if(points > EEPROM.read(0)){
     congratsHighScore(points);
@@ -155,14 +203,13 @@ void gameOver(){
 void moveGame(int nextPosition, bool directionRow){
   if(dead()){
       gameOver();
-    }else{ 
-      moveTheSnake(nextPosition, directionRow);
+  }else{
       eatFood();
-   }
+      moveTheSnake(nextPosition, directionRow);
+  }
 }
 void updateSnakePosition(){
   if(joystickMovedUp()){
-    // TODO teleportare
     moveGame(snakeRow[snakeLength - 1] + 1, true);
   }else if(joystickMovedDown()){
     moveGame(snakeRow[snakeLength - 1] - 1, true);
