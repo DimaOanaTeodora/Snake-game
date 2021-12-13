@@ -49,6 +49,7 @@ unsigned int newRandom(unsigned int minimum, unsigned int maximum){
 }
 void cornerWalls(){
   // HIGH difficulty
+  numberOfWalls = 0;
   wallsRow[numberOfWalls] = 0;
   wallsRow[numberOfWalls + 1] = 7;
   wallsRow[numberOfWalls + 2] = 7;

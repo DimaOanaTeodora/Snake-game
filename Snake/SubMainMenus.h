@@ -1,5 +1,6 @@
 //START 
 void start() {
+  menuSound();
   updateMatrixDisplay(three); 
   lcd.clear();
   lcd.setCursor(5, 0);
@@ -7,6 +8,7 @@ void start() {
 
   delay(1500);
 
+  menuSound();
   updateMatrixDisplay(two);
   lcd.clear();
   lcd.setCursor(6, 0);
@@ -14,6 +16,7 @@ void start() {
 
   delay(1500);
 
+  menuSound();
   updateMatrixDisplay(one);
   lcd.clear();
   lcd.setCursor(6, 0);
@@ -30,9 +33,9 @@ void highScore(){
   lcd.print("LEADERBOARD");
   lcd.setCursor(2, 1);
   lcd.print("1.");
-  lcd.print(readStringFromEEPROM(3));
+  lcd.print(readStringFromEEPROM(8));
   lcd.print(" ");
-  lcd.print(EEPROM.read(0));
+  lcd.print(EEPROM.read(5));
 
   delay(1500);
    
@@ -41,9 +44,9 @@ void highScore(){
   lcd.print("LEADERBOARD");
   lcd.setCursor(2, 1);
   lcd.print("2.");
-  lcd.print(readStringFromEEPROM(4));
+  lcd.print(readStringFromEEPROM(9));
   lcd.print(" ");
-  lcd.print(EEPROM.read(1));
+  lcd.print(EEPROM.read(6));
 
   delay(1500);
    
@@ -52,9 +55,9 @@ void highScore(){
   lcd.print("LEADERBOARD");
   lcd.setCursor(2, 1);
   lcd.print("3.");
-  lcd.print(readStringFromEEPROM(5));
+  lcd.print(readStringFromEEPROM(10));
   lcd.print(" ");
-  lcd.print(EEPROM.read(2));
+  lcd.print(EEPROM.read(7));
 
   delay(1500);
 

@@ -6,7 +6,8 @@ const int minTreshold = 350;
 const int maxTreshold = 550;
 int xValue = 0;
 int yValue = 0;
-bool switchState = LOW; //Joystick button
+bool switchState = HIGH; //Joystick button
+bool lastSwitchState = HIGH; //Joystick button
 
 // if game has started the matrix shows the snake else the matrix shows the arrows
 bool gameHasStarted = false;
@@ -29,6 +30,7 @@ bool joystickMovedUp(){
   }else if(yValue < minTreshold){
     if(!gameHasStarted){
       updateMatrixDisplay(up);
+      menuSound();
     }
     return true;
   }
@@ -39,6 +41,7 @@ bool joystickMovedDown(){
   }else if(yValue > maxTreshold){
     if(!gameHasStarted){
       updateMatrixDisplay(down);
+      menuSound();
     }
     return true;
   }
@@ -49,6 +52,7 @@ bool joystickMovedRight(){
   }else if(xValue > maxTreshold){
     if(!gameHasStarted){
       updateMatrixDisplay(right);
+      menuSound();
     }
     return true;
   }
@@ -59,6 +63,7 @@ bool joystickMovedLeft(){
   }else if(xValue < minTreshold){
     if(!gameHasStarted){
       updateMatrixDisplay(left);
+      menuSound();
     }
     return true;
   }

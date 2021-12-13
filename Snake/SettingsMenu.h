@@ -102,11 +102,37 @@ void back(){
    settingsMenuOpened = false;
    subSettingsMenuOpened = false;
 }
+void saveSettings(){
+  int value;
+  switch(currentSettingsMenu){
+    case 0:
+    value = difficultyLevel; 
+    break;
+    case 1:
+    if(mute == true){
+      value = 0;
+    }else{
+      value = 1;
+    }
+    break;
+    case 2:
+    value = contrastLevel; 
+    break;
+    case 3:
+    value = brightnessLevel;
+    break;
+    case 4:
+    value = matrixIntensityLevel;
+    break;
+  }
+  EEPROM.update(currentSettingsMenu, value);
+}
 void updateSettingsMenu(){
     // iterate through settings menu options 
     if(subSettingsMenuOpened == true){
       changeValuesSubSettingsMenu();
       if(joystickPressed()){
+        saveSettings();
         settingsMenu();
       }
     }else if(joystickMovedDown()){

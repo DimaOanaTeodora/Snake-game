@@ -31,6 +31,7 @@ void updatePlayerName(String playerName){
   lcd.print(playerName);
 }
 void greetings(){
+  menuSound();
   lcd.clear();
   lcd.setCursor(4, 0);
   lcd.print("~SNAKE~");
@@ -92,7 +93,7 @@ void game(){
   lcd.setCursor(10, 0);
   lcd.print("High ");
   lcd.setCursor(10, 1);
-  lcd.print(EEPROM.read(0));
+  lcd.print(EEPROM.read(5));
 }
 void updateGame(int level, int points){
   // update LCD with level and current score during the game

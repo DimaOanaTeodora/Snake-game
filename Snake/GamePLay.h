@@ -1,6 +1,13 @@
 // Variables
 bool congratsScreen = false;
 bool congratsHighScoreScreen = false;
+
+unsigned int long long lastMoved = 0;
+unsigned int long long lastMoved2 = 0;
+unsigned int long long lastMoved3 = 0;
+const int moveMenuInterval = 250;
+const int switchHeartInterval = 500;
+const int blinkingFoodInterval = 150;
 int moveGameInterval = 110;
 
 //Functions
@@ -21,18 +28,23 @@ void writePlayerName(){
 }
 void changePlayerName(){
      if(joystickMovedUp()){
+        menuSound();
         currentLetterPosition++;
         writePlayerName();
      }else if(joystickMovedDown()){
+        menuSound();
         currentLetterPosition--;
         writePlayerName();
      }else if(joystickMovedRight()){
+        menuSound();
         currentPlayerNamePosition++;
         writePlayerName();
      }else if(joystickMovedLeft()){
+        menuSound();
         currentPlayerNamePosition--;
         writePlayerName();
      }else if(joystickPressed()){
+        menuSound();
         // write to EEPROM 
         saveHighScore(points, player);
         enteringPlayerName = false;
@@ -114,20 +126,20 @@ void updateSnake(){
     if(tailCol < tailCol2){
       // right
       snakeRow[0] = tailRow;
-      snakeCol[0] = tailCol - 1;
+      snakeCol[0] = min(0, tailCol - 1);
     }else{
       // left
       snakeRow[0] = tailRow;
-      snakeCol[0] = tailCol + 1;
+      snakeCol[0] = max(7, tailCol + 1);
     }
   }else if(tailCol2 == tailCol){
     if(tailRow < tailRow2){
       // under
-      snakeRow[0] = tailRow - 1;
+      snakeRow[0] = min(0, tailRow - 1);
       snakeCol[0] = tailCol;
     }else{
       // above
-      snakeRow[0] = tailRow + 1;
+      snakeRow[0] = max(7, tailRow + 1);
       snakeCol[0] = tailCol;
     }
   }
@@ -151,6 +163,7 @@ void eatFood(){
    headCol = snakeCol[snakeLength - 1];
    
    if(headRow == foodRow && headCol == foodCol){
+        eatSound();
         if(difficultyLevel == 3){
           points += 5;
         }else if(difficultyLevel == 2){
@@ -190,7 +203,7 @@ bool dead(){
 }
 void gameOver(){
   playAgainScreen = true;
-  if(points > EEPROM.read(0)){
+  if(points > EEPROM.read(5)){
     congratsHighScore(points);
     congratsHighScoreScreen = true;
     enteringPlayerName = true;
@@ -202,6 +215,7 @@ void gameOver(){
 }
 void moveGame(int nextPosition, bool directionRow){
   if(dead()){
+      colisionSound();
       gameOver();
   }else{
       eatFood();

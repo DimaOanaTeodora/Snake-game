@@ -1,10 +1,5 @@
 - Bugs:
-- trebuie apasat butonul mai mult
-- mini blinking la coada cand mananca
-
-- Features:
-- de sincronizat si pus sunetul 
-- de salvat contrast, brightness, level si sound in EEPROM
+- mini blinking aleatoriu ?
 
 - cod spatieri
 - optimizari

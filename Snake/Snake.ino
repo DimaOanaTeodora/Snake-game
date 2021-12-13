@@ -11,14 +11,19 @@
 #include"SubMainMenus.h"
 #include"MainMenu.h"
 
-unsigned int long long lastMoved = 0;
-unsigned int long long lastMoved2 = 0;
-unsigned int long long lastMoved3 = 0;
-const int moveMenuInterval = 250;
-const int switchHeartInterval = 500;
-const int blinkingFoodInterval = 150;
-
 void setup() {
+  //resetMemory();
+  // read the settings from EEPROM
+  difficultyLevel = EEPROM.read(0);
+  int sound = EEPROM.read(1);
+  if(sound == 1){
+    mute = false;
+  }else{
+    mute = true;
+  }
+  contrastLevel = EEPROM.read(2);
+  brightnessLevel = EEPROM.read(3);
+  matrixIntensityLevel = EEPROM.read(4);
   lc.shutdown(0, false); 
   lc.setIntensity(0, matrixIntensityValue + matrixIntensityLevel);
   lc.clearDisplay(0);
@@ -29,23 +34,23 @@ void setup() {
   lcd.begin(16, 2);
   lcd.clear();
   lcd.setCursor(0, 0);
-  analogWrite(contrastPin, contrastValue);
-  analogWrite(brightnessPin, brightnessValue); 
+  analogWrite(contrastPin, contrastValue + contrastLevel * 16);
+  analogWrite(brightnessPin, brightnessValue + brightnessLevel * 100); 
   
-  //updateMatrixDisplay(matrixByte);
-  //resetMemory();
   greetings();
   mainMenu();
   Serial.begin(9600);
 }
 void exitCongratsHighScoreScreen(){
   if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
+    menuSound();
     congratsHighScoreScreen = false;
     enterPlayerName();
   }
 }
 void exitCongratsScreen(){
   if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
+    menuSound();
     congratsScreen = false;
     playAgainScreen = true;
     playAgain();
@@ -53,6 +58,7 @@ void exitCongratsScreen(){
 }
 void answerPlayAgain(){
   if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
+    menuSound();
     playAgainScreen = false;
     enteringPlayerName = false;
     gameHasStarted = true;
@@ -60,6 +66,7 @@ void answerPlayAgain(){
     game();
     resetGame();
   }else if(joystickPressed()){
+    menuSound();
     playAgainScreen = false;
     enteringPlayerName = false;
     gameHasStarted = false;

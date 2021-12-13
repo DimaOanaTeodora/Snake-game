@@ -6,14 +6,16 @@ const int buzzerPin = A2;
 // Functions
 void menuSound(){
   if(!mute){
-    tone(buzzerPin, 1865, 500);
+    tone(buzzerPin, 4978, 100);// 1865
   }
 }
 void eatSound(){
   if(!mute){
-    tone(buzzerPin, 4186, 500);
+    tone(buzzerPin, 4186, 100);
   }
 }
-void stopSound(){
-  noTone(buzzerPin);
+void colisionSound(){
+  if(!mute){
+    tone(buzzerPin, 139, 100);
+  }
 }
