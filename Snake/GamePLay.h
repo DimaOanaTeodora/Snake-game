@@ -1,14 +1,7 @@
 // Variables
-bool congratsScreen = false;
-bool congratsHighScoreScreen = false;
-
-unsigned int long long lastMoved = 0;
-unsigned int long long lastMoved2 = 0;
-unsigned int long long lastMoved3 = 0;
-const int moveMenuInterval = 250;
-const int switchHeartInterval = 500;
-const int blinkingFoodInterval = 150;
 int moveGameInterval = 110;
+bool congratsHighScoreScreen = false;
+bool congratsScreen = false;
 
 //Functions
 void writePlayerName(){
@@ -59,13 +52,19 @@ void resetGame(){
   moveGameInterval = 110;
   game(); //reset LCD
 
-  // generate obstacles depending on the level 
-  if(difficultyLevel == 2){
+  // generate obstacles depending on the level
+  switch(difficultyLevel){
+    case 1:
+    numberOfWalls = 0; 
+    break;
+    case 2:
     tinyObstacles();
     showWalls();
-  }else if(difficultyLevel == 3){
+    break;
+    case 3:
     cornerWalls();
     showWalls();
+    break;
   }
   generateSnake();
   generateFood();
@@ -143,15 +142,6 @@ void updateSnake(){
       snakeCol[0] = tailCol;
     }
   }
-  /*
-    Serial.println("Update Snake after");
-    for(int i = 0; i < snakeLength; i++){
-        Serial.print(snakeRow[i]);
-        Serial.print(" ");
-        Serial.print(snakeCol[i]);
-        Serial.print(";");
-    }
-    Serial.println();*/
 }
 void increaseGameSpeed(){
   if(level == 10 || level == 6 || level == 3){
@@ -214,12 +204,11 @@ void gameOver(){
   }
 }
 void moveGame(int nextPosition, bool directionRow){
+  eatFood();
+  moveTheSnake(nextPosition, directionRow);
   if(dead()){
       colisionSound();
       gameOver();
-  }else{
-      eatFood();
-      moveTheSnake(nextPosition, directionRow);
   }
 }
 void updateSnakePosition(){
