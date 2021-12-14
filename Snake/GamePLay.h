@@ -1,48 +1,58 @@
-// Variables
 int moveGameInterval = 110;
 bool congratsHighScoreScreen = false;
 bool congratsScreen = false;
+bool playAgainScreen = false;
 
-//Functions
+// HIGH SCORE -> PLAYER
+String player = "____";
+const String alphabet = "abcdefghijklmnopqrstuvwxyz";
+const byte maxLetterPosition = alphabet.length() - 1;
+const byte minLetterPosition = 0;
+int currentLetterPosition = 0;
+int currentNamePosition = 0;
+bool enteringPlayerName = false;
+const byte maxNamePosition = 3;
+const byte minNamePosition = 0;
+
 void writePlayerName(){
-  if(currentLetterPosition >= alphabetLength){
-     currentLetterPosition = 0;
-  }else if(currentLetterPosition < 0){
-    currentLetterPosition = alphabetLength - 1;
+  if(currentLetterPosition > maxLetterPosition){
+     currentLetterPosition = minLetterPosition;
+  }else if(currentLetterPosition < minLetterPosition){
+    currentLetterPosition = maxLetterPosition;
   }
   
-  if(currentPlayerNamePosition >= 4){
-     currentPlayerNamePosition = 0;
-  }else if(currentPlayerNamePosition < 0){
-     currentPlayerNamePosition = 3;
+  if(currentNamePosition > maxNamePosition){
+     currentNamePosition = minNamePosition;
+  }else if(currentNamePosition < minNamePosition){
+     currentNamePosition = maxNamePosition;
   }
-  player[currentPlayerNamePosition] = alphabet[currentLetterPosition];
+  player[currentNamePosition] = alphabet[currentLetterPosition];
   updatePlayerName(player);
 }
 void changePlayerName(){
-     if(joystickMovedUp()){
-        menuSound();
-        currentLetterPosition++;
-        writePlayerName();
-     }else if(joystickMovedDown()){
-        menuSound();
-        currentLetterPosition--;
-        writePlayerName();
-     }else if(joystickMovedRight()){
-        menuSound();
-        currentPlayerNamePosition++;
-        writePlayerName();
-     }else if(joystickMovedLeft()){
-        menuSound();
-        currentPlayerNamePosition--;
-        writePlayerName();
-     }else if(joystickPressed()){
-        menuSound();
-        // write to EEPROM 
-        saveHighScore(points, player);
-        enteringPlayerName = false;
-        playAgain();
-     }
+   if(joystickMovedUp()){
+      menuSound();
+      currentLetterPosition++;
+      writePlayerName();
+   }else if(joystickMovedDown()){
+      menuSound();
+      currentLetterPosition--;
+      writePlayerName();
+   }else if(joystickMovedRight()){
+      menuSound();
+      currentNamePosition++;
+      writePlayerName();
+   }else if(joystickMovedLeft()){
+      menuSound();
+      currentNamePosition--;
+      writePlayerName();
+   }else if(joystickPressed()){
+      menuSound();
+      // write to EEPROM 
+      saveHighScore(points, player);
+      enteringPlayerName = false;
+      playAgain();
+   }
 }
 void resetGame(){
   lc.clearDisplay(0);
@@ -102,9 +112,8 @@ void moveTheSnake(int newValue, bool row){
           snakeRow[i] = snakeRow[i + 1];
           snakeCol[i] = snakeCol[i + 1];
         }
-    }
+     }
   }
-  
 }
 void updateSnake(){
   // increase the size of the snake with 1 point attached to the tail
@@ -144,7 +153,8 @@ void updateSnake(){
   }
 }
 void increaseGameSpeed(){
-  if(level == 10 || level == 6 || level == 3){
+  // increase the speed depending on the level 4,8,12, 16
+  if(level % 4 == 0){
     moveGameInterval = moveGameInterval - 20;
   }
 }
@@ -171,8 +181,8 @@ void eatFood(){
         showFood(true);
    }
 }
-
 bool dead(){
+  // true if the snake hit a wall or committed suicide 
   headRow = snakeRow[snakeLength - 1];
   headCol = snakeCol[snakeLength - 1];
 
@@ -183,7 +193,7 @@ bool dead(){
     }
   }
   
-  // hit the obstacle
+  // hit a wall
   for(int i = 0; i< numberOfWalls; i++){
     if(wallsRow[i] == headRow && wallsCol[i] == headCol){
       return true;
@@ -194,6 +204,7 @@ bool dead(){
 void gameOver(){
   playAgainScreen = true;
   if(points > EEPROM.read(5)){
+    // we have a new high score
     congratsHighScore(points);
     congratsHighScoreScreen = true;
     enteringPlayerName = true;
@@ -212,6 +223,7 @@ void moveGame(int nextPosition, bool directionRow){
   }
 }
 void updateSnakePosition(){
+  // move the snake one position on the board
   if(joystickMovedUp()){
     moveGame(snakeRow[snakeLength - 1] + 1, true);
   }else if(joystickMovedDown()){

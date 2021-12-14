@@ -1,11 +1,13 @@
-//Variables
-String settingsMenuOptions []={"DIFFICULTY", "SOUND", "LCD CONTRAST", "LCD BRIGHT", "MATRIX BRIGHT", "BACK"};
+String const settingsMenuOptions [] = {"DIFFICULTY", "SOUND", "LCD CONTRAST", "LCD BRIGHT", "MATRIX BRIGHT", "BACK"};
 int currentSettingsMenu = 0; // [0,5] 
+const int maxValueSettingsMenu = 5;
+const int minValueSettingsMenu = 0;
+const int minInterval = 1;
+const int maxInterval = 3;
 
 bool settingsMenuOpened = false;
 bool subSettingsMenuOpened = false;
 
-// Functions
 void settingsMenu(){
   // LCD screen 
   subSettingsMenuOpened = false;
@@ -103,6 +105,7 @@ void back(){
    subSettingsMenuOpened = false;
 }
 void saveSettings(){
+  // save settings to EEPROM
   int value;
   switch(currentSettingsMenu){
     case 0:
@@ -137,14 +140,14 @@ void updateSettingsMenu(){
       }
     }else if(joystickMovedDown()){
         currentSettingsMenu ++;
-        if(currentSettingsMenu > 5){
-          currentSettingsMenu = 0;
+        if(currentSettingsMenu > maxValueSettingsMenu){
+          currentSettingsMenu = minValueSettingsMenu;
         }
         settingsMenu();
     }else if(joystickMovedUp()){
         currentSettingsMenu --;
-        if(currentSettingsMenu < 0){
-          currentSettingsMenu = 5;
+        if(currentSettingsMenu < minValueSettingsMenu){
+          currentSettingsMenu = maxValueSettingsMenu;
         }
         settingsMenu();
     }else if(joystickMovedRight() && settingsMenuOpened){

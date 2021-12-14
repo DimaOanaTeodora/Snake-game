@@ -1,3 +1,8 @@
+const int contrastValue= 70;
+const int brightnessValue = 28836;
+byte brightnessLevel = 2;
+byte contrastLevel = 2;
+
 //DIFFICULTY
 void difficultyMenu(){
   lcd.clear();

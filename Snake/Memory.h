@@ -1,9 +1,7 @@
 #include <EEPROM.h>
-/*
- * Save the top 3 high scores and the names
- * EEPROM = 0- leveldifficulty, 1- sound, 2- contrast LCD, 3- LCD bright, 4 -  matrix bright
- * HighScore (5,6,7), nameLenght(8,9,10), names(11,k,n) 
- * 
+/* Save the top 3 high scores (points & player's name)
+ * EEPROM = {0 - leveldifficulty, 1 - sound, 2 - contrast LCD, 3 - LCD bright, 4 -  matrix bright,
+ *           (5,6,7) - HighScore, (8,9,10) - the length of the names, (11,k,n) - names (one character/ position)} 
 */
 void writeNewHighScoreToEEPROM(int highScore){
   // shift the other 2 
@@ -18,7 +16,7 @@ void writeNewNameLengthToEEPROM(int nameLength){
   EEPROM.update(8, nameLength);
 }
 String readStringFromEEPROM(int offset){
-  // offset is the position in EEPROM of the length of the string you want to write
+  // offset = the position in EEPROM of the length of the string you want to write
   byte len = EEPROM.read(offset);
   char data[len + 1];
   byte start;

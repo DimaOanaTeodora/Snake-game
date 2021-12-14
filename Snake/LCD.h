@@ -1,5 +1,4 @@
 #include <LiquidCrystal.h>
-//Variables
 const int RS = 12; 
 const int enable = 11;
 const int d4 = 5;
@@ -10,14 +9,9 @@ const byte contrastPin = 6;
 const byte brightnessPin = 9;
 LiquidCrystal lcd(RS, enable, d4, d5, d6, d7);
 
-int contrastValue= 70;
-int brightnessValue = 28836;
-byte brightnessLevel = 2;
-byte contrastLevel = 2;
-byte minInterval = 1;
-byte maxInterval = 3;
+const int delayMainMenus = 1500;
+const int delayCongrats = 2000;
 
-//Functions
 void enterPlayerName(){
   lcd.clear();
   lcd.setCursor(3, 0);
@@ -39,7 +33,7 @@ void greetings(){
   lcd.print("Hi!");
 
   updateMatrixDisplay(hi);
-  delay(1500);
+  delay(delayMainMenus);
 }
 void congrats(int points) {
   updateMatrixDisplay(fullHeart);
@@ -51,7 +45,7 @@ void congrats(int points) {
   lcd.print("Your score: ");
   lcd.print(points);
 
-  delay(2000);
+  delay(delayCongrats);
 
   lcd.clear();
   lcd.setCursor(0, 0);

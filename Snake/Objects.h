@@ -1,12 +1,13 @@
-// Game objects - snake, obstacles, food
-// Variables
-String difficulty[] ={"LOW", "MEDIUM", "HIGH"};
-byte difficultyLevel = 1;
-/* LOW: no obstacles, 1 point/level 
- * MEDIUM: 2 tiny obstacles, 2 points/level
- * HIGH: 4 walls on the corners, 5 points/level
- * ++ increase the spead 
+/* Game objects: snake, obstacles, food
+ * Difficulty:  
+ *  LOW: no obstacles, 1 point/level 
+ *  MEDIUM: 2 tiny obstacles, 2 points/level
+ *  HIGH: 4 walls on the corners, 5 points/level
+ *  ++ increase the speed 
  */
+String const difficulty[] ={"LOW", "MEDIUM", "HIGH"};
+byte difficultyLevel = 1;
+
 // GAME 
 int level = 1;
 int points = 0;
@@ -33,23 +34,15 @@ int foodCol = -1;
 int lastFoodRow = -1;
 int lastFoodCol = -1;
 
-// PLAYER
-String player = "____";
-String alphabet = "abcdefghijklmnopqrstuvwxyz";
-byte alphabetLength = alphabet.length();
-int currentLetterPosition = -1;
-int currentPlayerNamePosition = 0;
-bool enteringPlayerName = false;
-bool playAgainScreen = false;
-
-//Functions
 unsigned int newRandom(unsigned int minimum, unsigned int maximum){
   // Arduino bug: the random(x,y) function doesn't work properly
   return minimum + random() % (maximum - minimum);
 }
 void cornerWalls(){
-  lc.clearDisplay(0);
   // HIGH difficulty
+  // fixed walls during the entire game sesion
+  // just increasing the speed
+  lc.clearDisplay(0);
   wallsRow[0] = 0;
   wallsCol[0] = 0;
   
@@ -90,23 +83,24 @@ void cornerWalls(){
 }
 void tinyObstacles(){
   // MEDIUM difficulty
+  // fixed random walls during the entire game sesion
+  // just increasing the speed
   lc.clearDisplay(0);
   int row = newRandom(0, matrixSize - 1);
   int col = newRandom(0, matrixSize - 1);
   
-  numberOfWalls = 0;
-  wallsRow[numberOfWalls] = row;
-  wallsRow[numberOfWalls + 1] = row;
-  wallsCol[numberOfWalls] = col;
-  wallsCol[numberOfWalls + 1] = col + 1;
+  wallsRow[0] = row;
+  wallsCol[0] = col;
+  wallsRow[1] = row;
+  wallsCol[1] = col + 1;
   
   row = newRandom(0, matrixSize - 1);
   col = newRandom(0, matrixSize - 1);
 
-  wallsRow[numberOfWalls + 2] = row;
-  wallsRow[numberOfWalls + 3] = row + 1;
-  wallsCol[numberOfWalls + 2] = col;
-  wallsCol[numberOfWalls + 3] = col;
+  wallsRow[2] = row;
+  wallsCol[2] = col;
+  wallsRow[3] = row + 1;
+  wallsCol[3] = col;
   numberOfWalls = 4;
 }
 bool isPartOfObstacle(int row, int col){
@@ -119,7 +113,7 @@ bool isPartOfObstacle(int row, int col){
   return false;
 }
 void generateSnake(){
-  // random generating the head snake
+  // random generating the head of the snake
   int row, col, maxInterval, minInterval;
   
   if(difficultyLevel == 3){
@@ -135,13 +129,11 @@ void generateSnake(){
     col = newRandom(0, maxInterval);
   }while(isPartOfObstacle(row, col));
   
-  snakeLength = 2;
   snakeRow[0] = row;
   snakeCol[0] = col;
   snakeRow[1] = row;
   snakeCol[1] = col + 1;
-  //snakeRow[2] = row;
-  //snakeCol[2] = col + 2;
+  snakeLength = 2;
 }
 bool isPartOfSnake(int row, int col){
   // true if a point(row, col) is part of the snake

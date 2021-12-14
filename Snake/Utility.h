@@ -1,4 +1,3 @@
-// Variables
 unsigned int long long lastMoved = 0;
 unsigned int long long lastMoved2 = 0;
 unsigned int long long lastMoved3 = 0;
@@ -7,8 +6,9 @@ const int switchHeartInterval = 500;
 const int blinkingFoodInterval = 150;
 bool blinking = false;
 
-// Functions
 void exitCongratsHighScoreScreen(){
+  // the game is over
+  // we have a new high score => switch to enter the player name screen
   if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
     menuSound();
     congratsHighScoreScreen = false;
@@ -16,6 +16,8 @@ void exitCongratsHighScoreScreen(){
   }
 }
 void exitCongratsScreen(){
+  // the game is over
+  // we don't have a new high score => switch play again screen
   if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
     menuSound();
     congratsScreen = false;
@@ -24,6 +26,8 @@ void exitCongratsScreen(){
   }
 }
 void answerPlayAgain(){
+  // the game is over
+  // answer to play again screen
   if(joystickMovedUp() || joystickMovedDown() || joystickMovedRight() || joystickMovedLeft()){
     menuSound();
     playAgainScreen = false;
@@ -43,10 +47,11 @@ void answerPlayAgain(){
   }
 }
 void connectMenus(){
+  // switch between the main menu and the settings menu
   if(mainMenuOpened){
     updateMainMenu();
   }else if(settingsMenuOpened){
-    if(joystickMovedRight() && subSettingsMenuOpened == false && currentSettingsMenu == 5){
+    if(joystickMovedRight() && subSettingsMenuOpened == false && currentSettingsMenu == maxValueSettingsMenu){
         back();
         mainMenu();
     }else{
@@ -55,8 +60,8 @@ void connectMenus(){
   }
 }
 void switchHeart(){
+  // changing heart animation
   if(millis() - lastMoved2 > switchHeartInterval){
-       // changing heart animation
        animation();
        lastMoved2 = millis();
   }
@@ -69,6 +74,7 @@ void blinkingFood(){
   }
 }
 void changeState(){
+  // changing states during the entire app
   if(!gameHasStarted){
     // menu && settings
     if(millis() - lastMoved > moveMenuInterval){

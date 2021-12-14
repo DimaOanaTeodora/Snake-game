@@ -1,13 +1,13 @@
-//Variables
-String mainMenuOptions[]={"START", "HIGH SCORE", "SETTINGS", "ABOUT"};
+String const mainMenuOptions[]={"START", "HIGH SCORE", "SETTINGS", "ABOUT"};
 int currentMainMenu = 0; // [0,3]
+const int maxValueMainMenu = 3;
+const int minValueMainMenu = 0;
 
 bool mainMenuOpened = false;
 bool subMainMenuOpened = false;
 
-// Functions
 void mainMenu(){
-  // LCD screen
+  // LCD 
   subMainMenuOpened = false;
   mainMenuOpened = true;
   
@@ -49,14 +49,14 @@ void updateMainMenu(){
   // iterate through main menu options 
    if(joystickMovedDown()){
         currentMainMenu ++;
-        if(currentMainMenu > 3){
-          currentMainMenu = 0;
+        if(currentMainMenu > maxValueMainMenu){
+          currentMainMenu = minValueMainMenu;
         }
         mainMenu();
     }else if(joystickMovedUp()){
         currentMainMenu --;
-        if(currentMainMenu < 0){
-          currentMainMenu = 3;
+        if(currentMainMenu < minValueMainMenu){
+          currentMainMenu = maxValueMainMenu;
         }
         mainMenu();
     }else if(joystickMovedRight() && mainMenuOpened){

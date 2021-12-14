@@ -6,7 +6,7 @@ void start() {
   lcd.setCursor(5, 0);
   lcd.print("GAME");
 
-  delay(1500);
+  delay(delayMainMenus);
 
   menuSound();
   updateMatrixDisplay(two);
@@ -14,7 +14,7 @@ void start() {
   lcd.setCursor(6, 0);
   lcd.print("SET");
 
-  delay(1500);
+  delay(delayMainMenus);
 
   menuSound();
   updateMatrixDisplay(one);
@@ -22,44 +22,63 @@ void start() {
   lcd.setCursor(6, 0);
   lcd.print("GO!");
 
-  delay(1500);
+  delay(delayMainMenus);
 
   gameHasStarted = true;
 }
 //HIGH SCORE 
 void highScore(){
+  String playerName;
   lcd.clear();
   lcd.setCursor(2, 0);
   lcd.print("LEADERBOARD");
   lcd.setCursor(2, 1);
   lcd.print("1.");
-  lcd.print(readStringFromEEPROM(8));
+  playerName = readStringFromEEPROM(8);
+  for(int i = 0; i < 4; i++){
+    if(playerName[i] == '_'){
+       playerName[i]=' ';
+    }
+  }
+  lcd.print(playerName);
   lcd.print(" ");
   lcd.print(EEPROM.read(5));
 
-  delay(1500);
+  delay(delayMainMenus);
    
   lcd.clear();
   lcd.setCursor(2, 0);
   lcd.print("LEADERBOARD");
   lcd.setCursor(2, 1);
   lcd.print("2.");
-  lcd.print(readStringFromEEPROM(9));
+  playerName = readStringFromEEPROM(9);
+  for(int i = 0; i < 4; i++){
+    if(playerName[i] == '_'){
+       playerName[i]=' ';
+    }
+  }
+  lcd.print(playerName);
   lcd.print(" ");
   lcd.print(EEPROM.read(6));
 
-  delay(1500);
+  delay(delayMainMenus);
    
   lcd.clear();
   lcd.setCursor(2, 0);
   lcd.print("LEADERBOARD");
   lcd.setCursor(2, 1);
   lcd.print("3.");
-  lcd.print(readStringFromEEPROM(10));
+  playerName = readStringFromEEPROM(10);
+  for(int i = 0; i < 4; i++){
+    if(playerName[i] == '_'){
+       playerName[i]=' ';
+    }
+  }
+  lcd.print(playerName);
   lcd.print(" ");
   lcd.print(EEPROM.read(7));
 
-  delay(1500);
+  delay(delayMainMenus);
 
   lcd.clear();
   lcd.setCursor(5, 0);
@@ -73,7 +92,7 @@ void about(){
   lcd.setCursor(1, 1);
   lcd.print("Oana Dima 341");
 
-  delay(1500);
+  delay(delayMainMenus);
 
   lcd.clear();
   lcd.setCursor(2, 0);
@@ -81,7 +100,7 @@ void about(){
   lcd.setCursor(3, 1);
   lcd.print("to Robotics");
   
-  delay(1500);
+  delay(delayMainMenus);
 
   lcd.clear();
   lcd.setCursor(2, 0);
@@ -89,7 +108,7 @@ void about(){
   lcd.setCursor(0, 1);
   lcd.print("DimaOanaTeodora");
 
-  delay(1500);
+  delay(delayMainMenus);
   
   lcd.clear();
   lcd.setCursor(4, 0);

@@ -25,6 +25,7 @@ void setup() {
   contrastLevel = EEPROM.read(2);
   brightnessLevel = EEPROM.read(3);
   matrixIntensityLevel = EEPROM.read(4);
+  
   lc.shutdown(0, false); 
   lc.setIntensity(0, matrixIntensityValue + matrixIntensityLevel);
   lc.clearDisplay(0);
@@ -44,6 +45,5 @@ void setup() {
 }
 void loop() {
   readFromJoystick();
-  
   changeState();
 }
