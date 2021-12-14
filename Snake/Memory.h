@@ -40,8 +40,8 @@ String readStringFromEEPROM(int offset){
 }
 void writeNewStringNameToEEPROM(String player1){
   byte len1, len2, len3; 
-  String player2 = readStringFromEEPROM(3);
-  String player3 = readStringFromEEPROM(4);
+  String player2 = readStringFromEEPROM(8);
+  String player3 = readStringFromEEPROM(9);
   
   len1 = player1.length();
   len2 = player2.length();
@@ -64,11 +64,11 @@ void writeNewStringNameToEEPROM(String player1){
 void resetMemory(){
   // reset the top 3 scores to 0 
   // use it in dev :)
-  EEPROM.update(0, 1); // LOW
+  /*EEPROM.update(0, 1); // LOW
   EEPROM.update(1, 0); // UNMUTE
   EEPROM.update(2, 1); // the best
   EEPROM.update(3, 2); // the best
-  EEPROM.update(4, 1); // the best for my eyes :)
+  EEPROM.update(4, 1); // the best for my eyes :)*/
   
   EEPROM.update(5, 0);
   EEPROM.update(6, 0);

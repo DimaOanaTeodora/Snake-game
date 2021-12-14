@@ -1,21 +1,22 @@
-// Variables
+#define NOTE_DS8 4978 
+#define NOTE_C8 4186
+#define NOTE_CS3 139
 bool mute = false;
 const int buzzerPin = A2;
-//tone(A2, 200, 500);
+const int duration = 100; //millis
 
-// Functions
 void menuSound(){
   if(!mute){
-    tone(buzzerPin, 4978, 100);// 1865
+    tone(buzzerPin, NOTE_DS8, duration);
   }
 }
 void eatSound(){
   if(!mute){
-    tone(buzzerPin, 4186, 100);
+    tone(buzzerPin, NOTE_C8, duration);
   }
 }
 void colisionSound(){
   if(!mute){
-    tone(buzzerPin, 139, 100);
+    tone(buzzerPin, NOTE_CS3, duration);
   }
 }

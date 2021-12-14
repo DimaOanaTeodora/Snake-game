@@ -48,42 +48,49 @@ unsigned int newRandom(unsigned int minimum, unsigned int maximum){
   return minimum + random() % (maximum - minimum);
 }
 void cornerWalls(){
+  lc.clearDisplay(0);
   // HIGH difficulty
-  numberOfWalls = 0;
-  wallsRow[numberOfWalls] = 0;
-  wallsRow[numberOfWalls + 1] = 7;
-  wallsRow[numberOfWalls + 2] = 7;
-  wallsRow[numberOfWalls + 3] = 0;
+  wallsRow[0] = 0;
+  wallsCol[0] = 0;
   
-  wallsCol[numberOfWalls] = 0;
-  wallsCol[numberOfWalls + 1] = 7;
-  wallsCol[numberOfWalls + 2] = 0;
-  wallsCol[numberOfWalls + 3] = 7;
-  numberOfWalls = 4;
+  wallsRow[1] = 7;
+  wallsCol[1] = 7;
   
-  for(int i=1; i<=2; i++){
-    wallsRow[numberOfWalls] = 0;
-    wallsRow[numberOfWalls + 1] = i;
-    wallsRow[numberOfWalls + 2] = 7 - i;
-    wallsRow[numberOfWalls + 3] = 0;
-    wallsRow[numberOfWalls + 4] = 7 - i;
-    wallsRow[numberOfWalls + 5] = 7;
-    wallsRow[numberOfWalls + 6] = 7;
-    wallsRow[numberOfWalls + 7] = i;
-    
-    wallsCol[numberOfWalls] = i;
-    wallsCol[numberOfWalls + 1] = 0;
-    wallsCol[numberOfWalls + 2] = 0;
-    wallsCol[numberOfWalls + 3] = 7 - i;
-    wallsCol[numberOfWalls + 4] = 7;
-    wallsCol[numberOfWalls + 5] = 7 - i;
-    wallsCol[numberOfWalls + 6] = i;
-    wallsCol[numberOfWalls + 7] = 7;
-    numberOfWalls += 8;
-  }
+  wallsRow[2] = 7;
+  wallsCol[2] = 0;
+  
+  wallsRow[3] = 0;
+  wallsCol[3] = 7;
+  
+  wallsRow[4] = 0;
+  wallsCol[4] = 1;
+
+  wallsRow[5] = 1;
+  wallsCol[5] = 0;
+
+  wallsRow[6] = 0;
+  wallsCol[6] = 6;
+
+  wallsRow[7] = 6;
+  wallsCol[7] = 0;
+
+  wallsRow[8] = 7;
+  wallsCol[8] = 6;
+
+  wallsRow[9] = 6;
+  wallsCol[9] = 7;
+
+  wallsRow[10] = 7;
+  wallsCol[10] = 1;
+
+  wallsRow[11] = 1;
+  wallsCol[11] = 7;
+  
+  numberOfWalls = 12;
 }
 void tinyObstacles(){
   // MEDIUM difficulty
+  lc.clearDisplay(0);
   int row = newRandom(0, matrixSize - 1);
   int col = newRandom(0, matrixSize - 1);
   
