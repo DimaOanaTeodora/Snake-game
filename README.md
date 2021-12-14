@@ -4,6 +4,8 @@
 
 ### :books: [Project requirements](https://github.com/DimaOanaTeodora/Snake-game/edit/main/REQUIREMENTS.md) 
 
+## [Watch YouTube demo here](http://stackoverflow.com){:target="_blank" rel="noopener"}
+
 # How to play the game?
 ## Game goal
 Goal is to eat the food and get a new high score. 
@@ -38,7 +40,7 @@ The score depends on the difficulty:
  - HIGH: 5 points/level
 ```
 
-The movement speed of the snake increases once at 4 levels. In case of a new high score beeing reached, the playername and the score are written into the EEPROM memory of Arduino.
+The movement speed of the snake increases once at 4 levels. In case of a new high score beeing reached, the player name and the score are written into the EEPROM memory of Arduino.
 
 
 
