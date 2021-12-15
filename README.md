@@ -6,6 +6,8 @@
 
 ### <a href="http://stackoverflow.com" target="_blank"> :clapper: Watch YouTube demo here</a>
 
+### [Go to documentation](#flow)
+
 # :crossed_swords: How to play the game?
 
 ## :weight_lifting_woman: Game goal
