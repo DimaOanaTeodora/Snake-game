@@ -56,7 +56,7 @@ Hardware components:
 - joystick
 - active buzzer 
 - 8x8 led matrix
-- two breadbords
+- two breadboards
 - wires
 - 10UF electrolytic capacitor
 - 100UF electrolytic capacitor
