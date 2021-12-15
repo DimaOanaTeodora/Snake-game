@@ -45,5 +45,7 @@ The movement speed of the snake increases once at 4 levels. In case of a new hig
 
 # App flow
 
+![Snake](https://user-images.githubusercontent.com/61749814/146158283-e37aeae6-5790-430e-a6de-86c14bdb5b1d.png)
+
 # Quick rundown
 
