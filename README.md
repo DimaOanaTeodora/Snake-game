@@ -48,15 +48,14 @@ The movement speed of the snake increases once at 4 levels. In case of a new hig
 ![Snake](https://user-images.githubusercontent.com/61749814/146158283-e37aeae6-5790-430e-a6de-86c14bdb5b1d.png)
 
 # Quick rundown
-
-1.564 / 5.000
 The application is divided into 14 headers, each corresponding to a part of the game.
 
 When Arduino is starting, the EEPROM values are loaded for: LCD brightness, LCD contrast, matrix brightness, mute/unmute the sound and game difficulty level. A welcome message will appear on the screen for ```1.5s``` and after that, the main menu is loaded on the LCD.
 The joystick input values are read continuously in ```loop()``` through ```readFromJoystick();``` method. There are 5 functions designed to test the direction of the joystick during the game in ```Joystick.h``` file.
-The delay(millis); function is used only when the game blocking is necessary: the automatic scrolling in the ABOUT and HIGH SCORE submenus. The rest of the application uses the millis(); function, along with different values: 0,15s for food blinking, 0,5s for heart animation, 0,25s for menu movement, 0,11s for the initial speed of the snake. 
+The ```delay(millis);``` function is used only when the game blocking is allowed: the automatic scrolling in the ABOUT and HIGH SCORE submenus. The rest of the application uses the ```millis();``` function, along with different values: ```0.15s``` for food blinking, ```0.5s``` for heart animation, ```0.25s``` for menu movement, ```0.11s``` for the initial speed of the snake. 
 ```C++
 Utility.h
+
 void changeState() {
   // changing states during the entire app
   if(!gameHasStarted) {
@@ -106,4 +105,4 @@ void changeState() {
 }
 ```
 
-Several boolean variables ensure the interchanging between LCD screens: congratsHighScoreScreen, congratsScreen, playAgainScreen, gameHasStarted, mainMenuOpened, subMainMenuOpened, animationHeart, settingsMenuOpened, subSettingsMenuOpened. For each part of the menu that requires scrolling (horizontal or vertical) there is a function called changeX(value);, where X is the name of the screen that it corresponds, through which the new value is displayed. So, only one part of the screen is rendered each time, not the entire LCD. 
+Several boolean variables ensure the interchanging between LCD screens: ```congratsHighScoreScreen, congratsScreen, playAgainScreen, gameHasStarted, mainMenuOpened, subMainMenuOpened, animationHeart, settingsMenuOpened, subSettingsMenuOpened```. For each part of the menu that requires scrolling (horizontal or vertical) there is a function called ```changeX(value);```, where X is the name of the screen that it corresponds, through which the new value is displayed. So, only one part of the screen is rendered each time, not the entire LCD. 
