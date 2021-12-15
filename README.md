@@ -6,7 +6,7 @@
 
 ### <a href="http://stackoverflow.com" target="_blank"> :clapper: Watch YouTube demo here</a>
 
-### [Go to documentation](#flow)
+### [:eyeglasses: Go to documentation](https://github.com/DimaOanaTeodora/Snake-game/blob/main/README.md#world_map-app-flow)
 
 # :crossed_swords: How to play the game?
 
