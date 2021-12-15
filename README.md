@@ -4,19 +4,17 @@
 
 ### :books: [Project requirements](https://github.com/DimaOanaTeodora/Snake-game/edit/main/REQUIREMENTS.md) 
 
-### <a href="http://stackoverflow.com" target="_blank"> :clapper: Watch YouTube demo here</a>
+### :clapper: <a href="http://stackoverflow.com" target="_blank">Watch YouTube demo here</a>
 
-### [:eyeglasses: Go to documentation](https://github.com/DimaOanaTeodora/Snake-game/blob/main/README.md#world_map-app-flow)
+### :eyeglasses: [Go to documentation](https://github.com/DimaOanaTeodora/Snake-game/blob/main/README.md#world_map-app-flow)
 
-# :crossed_swords: How to play the game?
+# How to play the game?
 
 ## :weight_lifting_woman: Game goal
-Goal is to eat the food and get a new high score. 
-The game ends when the snake eats himself or collides with the obstacles/walls.
+Goal is to eat the food and get a new high score. The game ends when the snake eats himself or collides with the obstacles/walls.
 
 ## :gear: Menu
-You can scroll through the menus moving the joystcik up/down.
-You can choose an option from the menu moving the joystick right. Menu design:
+You can scroll through the menus moving the joystcik up/down. You can choose an option from the menu moving the joystick right. Menu design:
 ```
 - MAIN MENU
   - START - choose to start the game
@@ -44,7 +42,7 @@ The score depends on the difficulty:
  - HIGH: 5 points/level
 ```
 
-The movement speed of the snake increases once at 4 levels. In case of a new high score beeing reached, the player name and the score are written into the EEPROM memory of Arduino.
+The movement speed of the snake increases once at 4 levels. In case of a new high score beeing reached, the player name and the score are written into the EEPROM memory of Arduino. You can see them in the Main menu -> HIGH SCORE section.
 
 # :world_map: App flow
 
@@ -55,7 +53,7 @@ The application is divided into 14 headers, each corresponding to a part of the 
 
 When Arduino is starting, the EEPROM values are loaded for: LCD brightness, LCD contrast, matrix brightness, mute/unmute the sound and game difficulty level. A welcome message will appear on the screen for ```1.5s``` and after that, the main menu is loaded on the LCD.
 The joystick input values are read continuously in ```loop()``` through ```readFromJoystick();``` method. There are 5 functions designed to test the direction of the joystick during the game in ```Joystick.h``` file.
-The ```delay(millis);``` function is used only when the game blocking is allowed: the automatic scrolling in the ABOUT and HIGH SCORE submenus. The rest of the application uses the ```millis();``` function, along with different values: ```0.15s``` for food blinking, ```0.5s``` for heart animation, ```0.25s``` for menu movement, ```0.11s``` for the initial speed of the snake. 
+The ```delay(millis);``` function is used only when the game blocking is allowed: the automatic scrolling in the ABOUT and HIGH SCORE sections. The rest of the application uses the ```millis();``` function, along with different values: ```0.15s``` for food blinking, ```0.5s``` for heart animation, ```0.25s``` for menu movement, ```0.11s``` for the initial speed of the snake. 
 ```C++
 Utility.h
 
@@ -108,19 +106,18 @@ void changeState() {
 }
 ```
 
-Several boolean variables ensure the interchanging between LCD screens: ```congratsHighScoreScreen, congratsScreen, playAgainScreen, gameHasStarted, mainMenuOpened, subMainMenuOpened, animationHeart, settingsMenuOpened, subSettingsMenuOpened```. For each part of the menu that requires scrolling (horizontal or vertical) there is a function called ```changeX(value);```, where X is the name of the screen that it corresponds, through which the new value is displayed. So, only one part of the screen is rendered each time, not the entire LCD. 
+Several boolean variables ensure the interchanging between LCD screens and game states: ```congratsHighScoreScreen, congratsScreen, playAgainScreen, gameHasStarted, mainMenuOpened, subMainMenuOpened, animationHeart, settingsMenuOpened, subSettingsMenuOpened```. For each part of the menu that requires scrolling (horizontal or vertical) there is a function called ```changeX(value);```, where ```X``` is the name of the screen that it corresponds, through which the new value is displayed. So, only one part of the screen is rendered each time, not the entire LCD. 
 
-The snake is saved in two arrays, one for the row coordinates and one for the column coordinates: ```snakeRow``` and ```snakeCol```. The initial length is 2, and the head is generated randomly. The head is on the last position of the arrays(```snakeLength - 1```) and the tail is on the first position. 
-
+The snake is saved into two arrays, one for the row coordinates and one for the column coordinates: ```snakeRow``` and ```snakeCol```. The initial length is 2, and the head is random generated. The head is on the last position of the arrays(```snakeLength - 1```) and the tail is on the first position. 
 
 The snake is moved on the game board as follows: 
-1. updateSnakePosition() - calculates the next row/column on the board depending on the joystick input
-2. moveGame(nextPosition, directionRow) - checks if it has food to eat and if the snake is dead
-3. moveTheSnake(nextPosition, directionRow) - calculates the new coordinates for the snake
+1. ```updateSnakePosition()``` - calculates the next row/column on the board depending on the joystick input
+2. ```moveGame(nextPosition, directionRow)``` - checks if it has food to eat and if the snake is dead
+3. ```moveTheSnake(nextPosition, directionRow)``` - calculates the new coordinates for the snake
 
- ```nextPosition``` represents the next row if the ```directionRow``` is ```true```, or the next column if the ```directionRow``` is ```false```
+ ```nextPosition``` represents the next row if the ```directionRow``` is ```true```, or the next column if the ```directionRow``` is ```false```.
  
-When a food is eaten, the length of the snake is increased by one unit and the new tail is generated by the function below:
+When a food is eaten, the length of the snake is increased by one unit and the new tail is generated by the method below:
 ```C++
 GamePlay.h
 
@@ -179,13 +176,13 @@ void updateSnake() {
 ```
  Game levels:
 
- 1. LOW: no walls, just randomly generated food/leve 
- 2. MEDIUM: random 4/3 walls generated at level 1 and randomly generated food/level
- 3. HIGH: fixed corner walls nd randomly generated food/level
+ 1. LOW: no walls, just random generated food/level 
+ 2. MEDIUM: random 4/3 walls generated at level 1 and random generated food/level
+ 3. HIGH: fixed corner walls nd random generated food/level
 
  1. <img src="https://user-images.githubusercontent.com/61749814/146180742-d7227f5d-96ed-409d-8f4a-d6e00314e4e0.png" width="100px" height="100px"/>2. <img src="https://user-images.githubusercontent.com/61749814/146180695-9de9b27a-03ec-4371-b168-8e1205f3a50a.png" width="100px" height="100px"/>3. <img src="https://user-images.githubusercontent.com/61749814/146180628-cf052a75-7d3d-4c60-b5f3-39ee77e6e5a5.png" width="100px" height="100px"/>
  
- The walls, food and head snake are random generated using a custom random function because of a Arduino bug - [find out more about that here](https://forum.arduino.cc/t/help-random-function-not-working/3183/3): 
+ The walls, food and the head snake are random generated using a custom function because of a Arduino bug - [find out more about that here](https://forum.arduino.cc/t/help-random-function-not-working/3183/3): 
  ```C++
  Objects.h
  
@@ -194,7 +191,7 @@ void updateSnake() {
   return minimum + random() % (maximum - minimum);
 }
  ```
-The game svaes the last 3 high scores along with the player's nickname (maximum 4 letters). These are displayed in the main menu -> HIGH SCORE. It also saves the LCD, sound, difficulty and matrix settings from the settings menu in the EEPROM memory, so that they can be loaded when the Arduino board is restarted.
+The game saves the last 3 high scores along with the player's nicknames (maximum 4 letters/nickname). These are displayed in the Main menu -> HIGH SCORE section. It also saves the LCD contrast/brightness, sound, difficulty level and matrix settings from the settings menu in the EEPROM memory, so that they can be loaded when the Arduino board is restarted.
 
 EEPROM schema
 
