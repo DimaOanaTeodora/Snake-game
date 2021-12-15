@@ -49,6 +49,20 @@ The movement speed of the snake increases once at 4 levels. In case of a new hig
 ![Snake](https://user-images.githubusercontent.com/61749814/146158283-e37aeae6-5790-430e-a6de-86c14bdb5b1d.png)
 
 # :building_construction:	 Quick rundown
+
+Hardware components:
+- Arduino UNO
+- 16x2 LCD
+- joystick
+- active buzzer 
+- 8x8 led matrix
+- two breadbords
+- wires
+- 10UF electrolytic capacitor
+- 100UF electrolytic capacitor
+- 0.033UF ceramic capacitor
+- 10k resistor
+
 The application is divided into 14 headers, each corresponding to a part of the game.
 
 When Arduino is starting, the EEPROM values are loaded for: LCD brightness, LCD contrast, matrix brightness, mute/unmute the sound and game difficulty level. A welcome message will appear on the screen for ```1.5s``` and after that, the main menu is loaded on the LCD.
