@@ -12,8 +12,8 @@ Goal is to eat the food and get a new high score.
 The game ends when the snake eats himself or collides with the obstacles/walls.
 
 ## Menu
-You can scroll through the menus using up/down direction of movement of the joystcik.
-You can choose an option from the menu through the right direction of movement from the joystick. Menu design:
+You can scroll through the menus moving the joystcik up/down.
+You can choose an option from the menu moving the joystick right. Menu design:
 ```
 - MAIN MENU
   - START - choose to start the game
