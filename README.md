@@ -12,7 +12,8 @@ Goal is to eat the food and get a new high score.
 The game ends when the snake eats himself or collides with the obstacles/walls.
 
 ## Menu
-You can choose an option from the menu through the right direction movement from the joystick. enu design:
+You can scroll through the menus using up/down direction of movement of the joystcik.
+You can choose an option from the menu through the right direction of movement from the joystick. Menu design:
 ```
 - MAIN MENU
   - START - choose to start the game
@@ -42,5 +43,7 @@ The score depends on the difficulty:
 
 The movement speed of the snake increases once at 4 levels. In case of a new high score beeing reached, the player name and the score are written into the EEPROM memory of Arduino.
 
+# App flow
 
+# Quick rundown
 
