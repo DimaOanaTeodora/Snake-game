@@ -4,7 +4,7 @@
 
 ### :books: [Project requirements](https://github.com/DimaOanaTeodora/Snake-game/edit/main/REQUIREMENTS.md) 
 
-## <a href="http://stackoverflow.com" target="_blank">Watch YouTube demo here</a>
+### <a href="http://stackoverflow.com" target="_blank">Watch YouTube demo here</a>
 
 # How to play the game?
 ## Game goal
