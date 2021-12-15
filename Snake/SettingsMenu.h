@@ -8,7 +8,7 @@ const int maxInterval = 3;
 bool settingsMenuOpened = false;
 bool subSettingsMenuOpened = false;
 
-void settingsMenu(){
+void settingsMenu() {
   // LCD screen 
   subSettingsMenuOpened = false;
   settingsMenuOpened = true;
@@ -17,9 +17,9 @@ void settingsMenu(){
   lcd.setCursor(3,0);
   lcd.print("Settings");
   
-  if(settingsMenuOptions[currentSettingsMenu].length() > 10){
+  if(settingsMenuOptions[currentSettingsMenu].length() > 10) {
     lcd.setCursor(1,1);
-  }else if(settingsMenuOptions[currentSettingsMenu].length() > 6){
+  }else if(settingsMenuOptions[currentSettingsMenu].length() > 6) {
     lcd.setCursor(2,1);
   }else{
     lcd.setCursor(4,1);
@@ -27,7 +27,7 @@ void settingsMenu(){
   lcd.print(">>");
   lcd.print(settingsMenuOptions[currentSettingsMenu]);
 }
-void changeSubSettingsMenu(){
+void changeSubSettingsMenu() {
   // switch submenus on the LCD
   subSettingsMenuOpened = true;
   
@@ -52,47 +52,47 @@ void changeSubSettingsMenu(){
     break;
   }
 }
-void changeValuesSubSettingsMenu(){
+void changeValuesSubSettingsMenu() {
   // change the option value(levels) in a submenu of the settings menu
   switch (currentSettingsMenu) {
   case 0:
-    if(joystickMovedRight() && difficultyLevel < maxInterval){
+    if(joystickMovedRight() && difficultyLevel < maxInterval) {
         difficultyLevel ++;
         difficultyMenu();
-    }else if(joystickMovedLeft() && difficultyLevel > minInterval){
+    }else if(joystickMovedLeft() && difficultyLevel > minInterval) {
         difficultyLevel --;
         difficultyMenu();
     }
     break;
   case 1:
-    if(joystickMovedRight() || joystickMovedLeft()){
+    if(joystickMovedRight() || joystickMovedLeft()) {
         mute = !mute;
         changeSound();
     }
     break;
   case 2:
-    if(joystickMovedRight() && contrastLevel < maxInterval){
+    if(joystickMovedRight() && contrastLevel < maxInterval) {
         contrastLevel ++;
         changeContrast();
-    }else if(joystickMovedLeft() && contrastLevel > minInterval){
+    }else if(joystickMovedLeft() && contrastLevel > minInterval) {
         contrastLevel --;
         changeContrast();
     }
     break;
   case 3:
-    if(joystickMovedRight() && brightnessLevel < maxInterval){
+    if(joystickMovedRight() && brightnessLevel < maxInterval) {
         brightnessLevel ++;
         changeBrightness();
-    }else if(joystickMovedLeft() && brightnessLevel > minInterval){
+    }else if(joystickMovedLeft() && brightnessLevel > minInterval) {
         brightnessLevel --;
         changeBrightness();
     }
     break;
   case 4:
-    if(joystickMovedRight() && matrixIntensityLevel < maxInterval){
+    if(joystickMovedRight() && matrixIntensityLevel < maxInterval) {
         matrixIntensityLevel ++;
         matrixIntensityMenu();
-    }else if(joystickMovedLeft() && matrixIntensityLevel > minInterval){
+    }else if(joystickMovedLeft() && matrixIntensityLevel > minInterval) {
         matrixIntensityLevel --;
         matrixIntensityMenu();
     }
@@ -100,21 +100,21 @@ void changeValuesSubSettingsMenu(){
   }
 }
 // BACK 
-void back(){
+void back() {
    settingsMenuOpened = false;
    subSettingsMenuOpened = false;
 }
-void saveSettings(){
+void saveSettings() {
   // save settings to EEPROM
   int value;
-  switch(currentSettingsMenu){
+  switch(currentSettingsMenu) {
     case 0:
     value = difficultyLevel; 
     break;
     case 1:
-    if(mute == true){
+    if(mute == true) {
       value = 0;
-    }else{
+    }else {
       value = 1;
     }
     break;
@@ -130,29 +130,29 @@ void saveSettings(){
   }
   EEPROM.update(currentSettingsMenu, value);
 }
-void updateSettingsMenu(){
+void updateSettingsMenu() {
     // iterate through settings menu options 
-    if(subSettingsMenuOpened == true){
+    if(subSettingsMenuOpened == true) {
       changeValuesSubSettingsMenu();
       if(joystickPressed()){
         saveSettings();
         settingsMenu();
       }
-    }else if(joystickMovedDown()){
+    }else if(joystickMovedDown()) {
         currentSettingsMenu ++;
-        if(currentSettingsMenu > maxValueSettingsMenu){
+        if(currentSettingsMenu > maxValueSettingsMenu) {
           currentSettingsMenu = minValueSettingsMenu;
         }
         settingsMenu();
-    }else if(joystickMovedUp()){
+    }else if(joystickMovedUp()) {
         currentSettingsMenu --;
-        if(currentSettingsMenu < minValueSettingsMenu){
+        if(currentSettingsMenu < minValueSettingsMenu) {
           currentSettingsMenu = maxValueSettingsMenu;
         }
         settingsMenu();
-    }else if(joystickMovedRight() && settingsMenuOpened){
+    }else if(joystickMovedRight() && settingsMenuOpened) {
         changeSubSettingsMenu();
-    }else if(joystickMovedLeft() && subSettingsMenuOpened){
+    }else if(joystickMovedLeft() && subSettingsMenuOpened) {
         settingsMenu();
     }
 }

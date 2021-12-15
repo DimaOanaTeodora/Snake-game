@@ -14,39 +14,42 @@ bool enteringPlayerName = false;
 const byte maxNamePosition = 3;
 const byte minNamePosition = 0;
 
-void writePlayerName(){
-  if(currentLetterPosition > maxLetterPosition){
+const int maxMatrixValue = 7;
+const int minMatrixValue = 0;
+
+void writePlayerName() {
+  if(currentLetterPosition > maxLetterPosition) {
      currentLetterPosition = minLetterPosition;
-  }else if(currentLetterPosition < minLetterPosition){
+  }else if(currentLetterPosition < minLetterPosition) {
     currentLetterPosition = maxLetterPosition;
   }
   
-  if(currentNamePosition > maxNamePosition){
+  if(currentNamePosition > maxNamePosition) {
      currentNamePosition = minNamePosition;
-  }else if(currentNamePosition < minNamePosition){
+  }else if(currentNamePosition < minNamePosition) {
      currentNamePosition = maxNamePosition;
   }
   player[currentNamePosition] = alphabet[currentLetterPosition];
   updatePlayerName(player);
 }
-void changePlayerName(){
-   if(joystickMovedUp()){
+void changePlayerName() {
+   if(joystickMovedUp()) {
       menuSound();
       currentLetterPosition++;
       writePlayerName();
-   }else if(joystickMovedDown()){
+   }else if(joystickMovedDown()) {
       menuSound();
       currentLetterPosition--;
       writePlayerName();
-   }else if(joystickMovedRight()){
+   }else if(joystickMovedRight()) {
       menuSound();
       currentNamePosition++;
       writePlayerName();
-   }else if(joystickMovedLeft()){
+   }else if(joystickMovedLeft()) {
       menuSound();
       currentNamePosition--;
       writePlayerName();
-   }else if(joystickPressed()){
+   }else if(joystickPressed()) {
       menuSound();
       // write to EEPROM 
       saveHighScore(points, player);
@@ -54,7 +57,7 @@ void changePlayerName(){
       playAgain();
    }
 }
-void resetGame(){
+void resetGame() {
   lc.clearDisplay(0);
   enteringPlayerName = false;
   level = 1;
@@ -63,7 +66,7 @@ void resetGame(){
   game(); //reset LCD
 
   // generate obstacles depending on the level
-  switch(difficultyLevel){
+  switch(difficultyLevel) {
     case 1:
     numberOfWalls = 0; 
     break;
@@ -81,7 +84,7 @@ void resetGame(){
   showSnake();
   showFood(true);
 }
-void moveTheSnake(int newValue, bool row){
+void moveTheSnake(int newValue, bool row) {
   // move the snake by changing head position
   // newValue is the new row/column for the head
  
@@ -89,18 +92,18 @@ void moveTheSnake(int newValue, bool row){
   bodyCol = snakeCol[snakeLength - 2];
 
   // this condition doesn't let the snake to turn the head 180 degrees and suicide
-  if(!((!row && abs(bodyCol - newValue)==0) || (row && abs(bodyRow - newValue)==0))){
+  if(!((!row && abs(bodyCol - newValue)==0) || (row && abs(bodyRow - newValue)==0))) {
     tailRow = snakeRow[0];
     tailCol = snakeCol[0];
     
     // teleporting the snake through the walls
-    if(newValue >= 8){
-      newValue = 0;
-    }else if(newValue <= -1){
-      newValue = 7;
+    if(newValue > maxMatrixValue) {
+      newValue = minMatrixValue;
+    }else if(newValue < minMatrixValue) {
+      newValue = maxMatrixValue;
     }
   
-    for(int i = 0; i < snakeLength; i++){
+    for(int i = 0; i < snakeLength; i++) {
         if(i == snakeLength - 1){
           // Snake HEAD
           if(row){
@@ -115,12 +118,12 @@ void moveTheSnake(int newValue, bool row){
      }
   }
 }
-void updateSnake(){
+void updateSnake() {
   // increase the size of the snake with 1 point attached to the tail
   int tailRow2, tailCol2;
-
+  
   snakeLength ++;
-  for(int i = snakeLength-1; i > 0; i--){
+  for(int i = snakeLength-1; i > 0; i--) {
     snakeRow[i] = snakeRow[i - 1];
     snakeCol[i] = snakeCol[i - 1];
   }
@@ -130,45 +133,61 @@ void updateSnake(){
   tailRow2 = snakeRow[2];
   tailCol2 = snakeCol[2];
 
-  if(tailRow2 == tailRow){
-    if(tailCol < tailCol2){
+  if(tailRow2 == tailRow) {
+    if(tailCol < tailCol2) {
       // right
       snakeRow[0] = tailRow;
-      snakeCol[0] = min(0, tailCol - 1);
+      tailCol --;
+      if(tailCol < minMatrixValue) {
+        tailCol = maxMatrixValue;
+      }
+      snakeCol[0] = tailCol;
     }else{
       // left
       snakeRow[0] = tailRow;
-      snakeCol[0] = max(7, tailCol + 1);
+      tailCol ++;
+      if(tailCol > maxMatrixValue) {
+        tailCol = minMatrixValue;
+      }
+      snakeCol[0] = tailCol;
     }
-  }else if(tailCol2 == tailCol){
-    if(tailRow < tailRow2){
+  }else if(tailCol2 == tailCol) {
+    if(tailRow < tailRow2) {
       // under
-      snakeRow[0] = min(0, tailRow - 1);
+      tailRow --;
+      if(tailRow < minMatrixValue) {
+        tailRow = maxMatrixValue;
+      }
+      snakeRow[0] = tailRow;
       snakeCol[0] = tailCol;
     }else{
       // above
-      snakeRow[0] = max(7, tailRow + 1);
+      tailRow ++;
+      if(tailRow > maxMatrixValue) {
+        tailRow = minMatrixValue;
+      }
+      snakeRow[0] = tailRow;
       snakeCol[0] = tailCol;
     }
   }
 }
-void increaseGameSpeed(){
+void increaseGameSpeed() {
   // increase the speed depending on the level 4,8,12, 16
   if(level % 4 == 0){
     moveGameInterval = moveGameInterval - 20;
   }
 }
-void eatFood(){
+void eatFood() {
    headRow = snakeRow[snakeLength - 1];
    headCol = snakeCol[snakeLength - 1];
    
-   if(headRow == foodRow && headCol == foodCol){
+   if(headRow == foodRow && headCol == foodCol) {
         eatSound();
-        if(difficultyLevel == 3){
+        if(difficultyLevel == 3) {
           points += 5;
-        }else if(difficultyLevel == 2){
+        }else if(difficultyLevel == 2) {
           points += 2;
-        }else{
+        }else {
           points ++; 
         }
         level ++;
@@ -176,61 +195,59 @@ void eatFood(){
         updateGame(level, points);//update LCD with score
         // generate new food && new snake
         updateSnake();
-        showSnake();
         generateFood();
-        showFood(true);
    }
 }
-bool dead(){
+bool dead() {
   // true if the snake hit a wall or committed suicide 
   headRow = snakeRow[snakeLength - 1];
   headCol = snakeCol[snakeLength - 1];
 
   // suicide
-  for(int i = 0; i < snakeLength - 1; i++){
-    if(snakeCol[i] == headCol && snakeRow[i] == headRow){
+  for(int i = 0; i < snakeLength - 1; i++) {
+    if(snakeCol[i] == headCol && snakeRow[i] == headRow) {
       return true;
     }
   }
-  
   // hit a wall
-  for(int i = 0; i< numberOfWalls; i++){
-    if(wallsRow[i] == headRow && wallsCol[i] == headCol){
+  for(int i = 0; i< numberOfWalls; i++) {
+    if(wallsRow[i] == headRow && wallsCol[i] == headCol) {
       return true;
     }
   }
   return false;
 }
-void gameOver(){
+void gameOver() {
   playAgainScreen = true;
-  if(points > EEPROM.read(5)){
+  if(points > EEPROM.read(5)) {
     // we have a new high score
     congratsHighScore(points);
     congratsHighScoreScreen = true;
     enteringPlayerName = true;
     congratsHighScore(points);
-  }else{
+  }else {
     congratsScreen = true;
     congrats(points);
   }
 }
-void moveGame(int nextPosition, bool directionRow){
-  eatFood();
+void moveGame(int nextPosition, bool directionRow) {
   moveTheSnake(nextPosition, directionRow);
-  if(dead()){
+  lc.setLed(0, tailRow, tailCol, false);
+  eatFood();
+  if(dead()) {
       colisionSound();
       gameOver();
   }
 }
-void updateSnakePosition(){
+void updateSnakePosition() {
   // move the snake one position on the board
-  if(joystickMovedUp()){
+  if(joystickMovedUp()) {
     moveGame(snakeRow[snakeLength - 1] + 1, true);
-  }else if(joystickMovedDown()){
+  }else if(joystickMovedDown()) {
     moveGame(snakeRow[snakeLength - 1] - 1, true);
-  }else if(joystickMovedRight()){
+  }else if(joystickMovedRight()) {
     moveGame(snakeCol[snakeLength - 1] - 1, false);
-  }else if(joystickMovedLeft()){
+  }else if(joystickMovedLeft()) {
     moveGame(snakeCol[snakeLength - 1] + 1, false);
   }
 }

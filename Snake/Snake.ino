@@ -17,9 +17,9 @@ void setup() {
   // read the settings from EEPROM
   difficultyLevel = EEPROM.read(0);
   int sound = EEPROM.read(1);
-  if(sound == 1){
+  if(sound == 1) {
     mute = false;
-  }else{
+  }else {
     mute = true;
   }
   contrastLevel = EEPROM.read(2);

@@ -12,7 +12,7 @@ LiquidCrystal lcd(RS, enable, d4, d5, d6, d7);
 const int delayMainMenus = 1500;
 const int delayCongrats = 2000;
 
-void enterPlayerName(){
+void enterPlayerName() {
   lcd.clear();
   lcd.setCursor(3, 0);
   lcd.print("Name: ");
@@ -20,11 +20,11 @@ void enterPlayerName(){
   lcd.setCursor(1, 1);
   lcd.print("Press to save!");
 }
-void updatePlayerName(String playerName){
+void updatePlayerName(String playerName) {
   lcd.setCursor(9, 0);
   lcd.print(playerName);
 }
-void greetings(){
+void greetings() {
   menuSound();
   lcd.clear();
   lcd.setCursor(4, 0);
@@ -64,7 +64,7 @@ void congratsHighScore(int points) {
   lcd.setCursor(0, 1);
   lcd.print("Move to continue");
 }
-void playAgain(){
+void playAgain() {
   lcd.clear();
   lcd.setCursor(2, 0);
   lcd.print("Play again?");
@@ -75,7 +75,7 @@ void playAgain(){
 
   updateMatrixDisplay(questionMark);
 }
-void game(){
+void game() {
   // LCD during the game
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -89,7 +89,7 @@ void game(){
   lcd.setCursor(10, 1);
   lcd.print(EEPROM.read(5));
 }
-void updateGame(int level, int points){
+void updateGame(int level, int points) {
   // update LCD with level and current score during the game
   lcd.setCursor(6, 0);
   lcd.print(level);

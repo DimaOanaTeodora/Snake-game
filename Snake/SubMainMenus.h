@@ -27,7 +27,7 @@ void start() {
   gameHasStarted = true;
 }
 //HIGH SCORE 
-void highScore(){
+void highScore() {
   String playerName;
   lcd.clear();
   lcd.setCursor(2, 0);
@@ -35,8 +35,8 @@ void highScore(){
   lcd.setCursor(2, 1);
   lcd.print("1.");
   playerName = readStringFromEEPROM(8);
-  for(int i = 0; i < 4; i++){
-    if(playerName[i] == '_'){
+  for(int i = 0; i < 4; i++) {
+    if(playerName[i] == '_') {
        playerName[i]=' ';
     }
   }
@@ -52,8 +52,8 @@ void highScore(){
   lcd.setCursor(2, 1);
   lcd.print("2.");
   playerName = readStringFromEEPROM(9);
-  for(int i = 0; i < 4; i++){
-    if(playerName[i] == '_'){
+  for(int i = 0; i < 4; i++) {
+    if(playerName[i] == '_') {
        playerName[i]=' ';
     }
   }
@@ -69,8 +69,8 @@ void highScore(){
   lcd.setCursor(2, 1);
   lcd.print("3.");
   playerName = readStringFromEEPROM(10);
-  for(int i = 0; i < 4; i++){
-    if(playerName[i] == '_'){
+  for(int i = 0; i < 4; i++) {
+    if(playerName[i] == '_') {
        playerName[i]=' ';
     }
   }
@@ -85,7 +85,7 @@ void highScore(){
   lcd.print("<<back");
 }
 // ABOUT
-void about(){
+void about() {
   lcd.clear();
   lcd.setCursor(1, 0);
   lcd.print("SNAKE~~Credits");

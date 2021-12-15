@@ -33,17 +33,17 @@ const byte two[] = {B00000000,B01111000,B00001000,B00010000,B00100000,B00100100,
 const byte one[] = {B00000000,B00111000,B00010000,B00010000,B00010100,B00011000,B00010000,B00000000};
 
 //Functions
-void updateMatrixDisplay(const byte matrix[]){
+void updateMatrixDisplay(const byte matrix[]) {
   // show the icons on the matrix display 
   lc.clearDisplay(0);
   for (int row = 0; row < matrixSize; row++) {
     lc.setRow(0, row, matrix[row]);
   }
 }
-void animation(){
-    if(!animationHeart){
+void animation() {
+    if(!animationHeart) {
       updateMatrixDisplay(fullHeart);
-    }else{
+    }else {
       updateMatrixDisplay(emptyHeart);
     }
     animationHeart = !animationHeart;

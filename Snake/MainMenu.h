@@ -6,7 +6,7 @@ const int minValueMainMenu = 0;
 bool mainMenuOpened = false;
 bool subMainMenuOpened = false;
 
-void mainMenu(){
+void mainMenu() {
   // LCD 
   subMainMenuOpened = false;
   mainMenuOpened = true;
@@ -23,7 +23,7 @@ void mainMenu(){
   lcd.print(">>");
   lcd.print(mainMenuOptions[currentMainMenu]);
 }
-void changeSubMainMenu(){
+void changeSubMainMenu() {
   // switch submenus on the LCD 
   subMainMenuOpened = true;
   switch (currentMainMenu) {
@@ -45,23 +45,23 @@ void changeSubMainMenu(){
     break;
   }
 }
-void updateMainMenu(){
+void updateMainMenu() {
   // iterate through main menu options 
-   if(joystickMovedDown()){
+   if(joystickMovedDown()) {
         currentMainMenu ++;
-        if(currentMainMenu > maxValueMainMenu){
+        if(currentMainMenu > maxValueMainMenu) {
           currentMainMenu = minValueMainMenu;
         }
         mainMenu();
-    }else if(joystickMovedUp()){
+    }else if(joystickMovedUp()) {
         currentMainMenu --;
-        if(currentMainMenu < minValueMainMenu){
+        if(currentMainMenu < minValueMainMenu) {
           currentMainMenu = maxValueMainMenu;
         }
         mainMenu();
-    }else if(joystickMovedRight() && mainMenuOpened){
+    }else if(joystickMovedRight() && mainMenuOpened) {
         changeSubMainMenu();
-    }else if(joystickMovedLeft() && subMainMenuOpened){
+    }else if(joystickMovedLeft() && subMainMenuOpened) {
         mainMenu();
     }
 }

@@ -38,7 +38,7 @@ unsigned int newRandom(unsigned int minimum, unsigned int maximum){
   // Arduino bug: the random(x,y) function doesn't work properly
   return minimum + random() % (maximum - minimum);
 }
-void cornerWalls(){
+void cornerWalls() {
   // HIGH difficulty
   // fixed walls during the entire game sesion
   // just increasing the speed
@@ -81,7 +81,7 @@ void cornerWalls(){
   
   numberOfWalls = 12;
 }
-void tinyObstacles(){
+void tinyObstacles() {
   // MEDIUM difficulty
   // fixed random walls during the entire game sesion
   // just increasing the speed
@@ -103,7 +103,7 @@ void tinyObstacles(){
   wallsCol[3] = col;
   numberOfWalls = 4;
 }
-bool isPartOfObstacle(int row, int col){
+bool isPartOfObstacle(int row, int col) {
   // true if a point(row, col) is part of a wall
   for(int i = 0; i< numberOfWalls; i++){
     if(wallsRow[i] == row && wallsCol[i] == col){
@@ -112,7 +112,7 @@ bool isPartOfObstacle(int row, int col){
   }
   return false;
 }
-void generateSnake(){
+void generateSnake() {
   // random generating the head of the snake
   int row, col, maxInterval, minInterval;
   
@@ -135,16 +135,16 @@ void generateSnake(){
   snakeCol[1] = col + 1;
   snakeLength = 2;
 }
-bool isPartOfSnake(int row, int col){
+bool isPartOfSnake(int row, int col) {
   // true if a point(row, col) is part of the snake
   for(int i = 0; i < snakeLength; i++){
-     if(snakeRow[i] == row && snakeCol[i] == col){
+     if(snakeRow[i] == row && snakeCol[i] == col) {
       return true;
      }
   }
   return false;
 }
-void generateFood(){
+void generateFood() {
   // generate random the food
   int row, col; 
   
