@@ -33,11 +33,13 @@ void setup() {
   pinMode(joyX, INPUT);
   pinMode(joyY, INPUT);
   pinMode(pinSw, INPUT_PULLUP);
-  lcd.begin(16, 2);
+  lcd.begin(lcdCols, lcdRows);
   lcd.clear();
   lcd.setCursor(0, 0);
   analogWrite(contrastPin, contrastValue + contrastLevel * 16);
   analogWrite(brightnessPin, brightnessValue + brightnessLevel * 100); 
+
+  randomSeed(analogRead(0));
   
   greetings();
   mainMenu();

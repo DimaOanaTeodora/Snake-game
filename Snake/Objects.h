@@ -34,10 +34,6 @@ int foodCol = -1;
 int lastFoodRow = -1;
 int lastFoodCol = -1;
 
-unsigned int newRandom(unsigned int minimum, unsigned int maximum){
-  // Arduino bug: the random(x,y) function doesn't work properly
-  return minimum + random() % (maximum - minimum);
-}
 void cornerWalls() {
   // HIGH difficulty
   // fixed walls during the entire game sesion
@@ -86,16 +82,16 @@ void tinyObstacles() {
   // fixed random walls during the entire game sesion
   // just increasing the speed
   lc.clearDisplay(0);
-  int row = newRandom(0, matrixSize - 1);
-  int col = newRandom(0, matrixSize - 1);
+  int row = random(0, matrixSize - 1);
+  int col = random(0, matrixSize - 1);
   
   wallsRow[0] = row;
   wallsCol[0] = col;
   wallsRow[1] = row;
   wallsCol[1] = col + 1;
   
-  row = newRandom(0, matrixSize - 1);
-  col = newRandom(0, matrixSize - 1);
+  row = random(0, matrixSize - 1);
+  col = random(0, matrixSize - 1);
 
   wallsRow[2] = row;
   wallsCol[2] = col;
@@ -125,8 +121,8 @@ void generateSnake() {
   }
   
   do{
-    row = newRandom(0, minInterval);
-    col = newRandom(0, maxInterval);
+    row = random(0, minInterval);
+    col = random(0, maxInterval);
   }while(isPartOfObstacle(row, col));
   
   snakeRow[0] = row;
@@ -149,8 +145,8 @@ void generateFood() {
   int row, col; 
   
   do{ 
-    row = newRandom(0, matrixSize);
-    col = newRandom(0, matrixSize);
+    row = random(0, matrixSize);
+    col = random(0, matrixSize);
   }while(isPartOfSnake(row, col) || isPartOfObstacle(row, col));
   
   lastFoodRow = foodRow;

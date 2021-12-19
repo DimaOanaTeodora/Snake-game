@@ -9,6 +9,9 @@ const byte contrastPin = 6;
 const byte brightnessPin = 9;
 LiquidCrystal lcd(RS, enable, d4, d5, d6, d7);
 
+byte lcdCols = 16;
+byte lcdRows = 2;
+
 const int delayMainMenus = 1500;
 const int delayCongrats = 2000;
 
