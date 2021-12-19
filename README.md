@@ -2,11 +2,15 @@
 ### Snake game using Arduino UNO and 8x8 led matrix
 [Introduction to Robotics](https://www.facebook.com/unibuc.robotics) @Unibuc 
 
+### :weight_lifting_woman: [How to play the game](https://github.com/DimaOanaTeodora/Snake-game#how-to-play-the-game)
+
 ### :books: [Project requirements](https://github.com/DimaOanaTeodora/Snake-game/edit/main/REQUIREMENTS.md) 
 
-### :clapper: <a href="http://stackoverflow.com" target="_blank">Watch YouTube demo here</a>
+### :clapper: <a href="https://youtu.be/FP7H6eIXJGc" target="_blank">Watch YouTube demo here</a>
 
 ### :eyeglasses: [Go to documentation](https://github.com/DimaOanaTeodora/Snake-game/blob/main/README.md#world_map-app-flow)
+
+![IMG_20211219_140929](https://user-images.githubusercontent.com/61749814/146675184-b05238be-debe-4a58-8bef-d56f41417a2d.jpg)
 
 # How to play the game?
 
