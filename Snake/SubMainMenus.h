@@ -26,23 +26,27 @@ void start() {
 
   gameHasStarted = true;
 }
+void printPlayerName(int nameIndex, int scoreIndex){
+  String playerName = readStringFromEEPROM(nameIndex);
+  int score = EEPROM.read(scoreIndex);
+  if(score > 0) {
+    for(int i = 0; i < 4; i++) {
+      if(playerName[i] != '_') {
+         lcd.print(playerName[i]);
+      }
+    }
+  }
+  lcd.print(" ");
+  lcd.print(score);
+}
 //HIGH SCORE 
 void highScore() {
-  String playerName;
   lcd.clear();
   lcd.setCursor(2, 0);
   lcd.print("LEADERBOARD");
   lcd.setCursor(2, 1);
   lcd.print("1.");
-  playerName = readStringFromEEPROM(8);
-  for(int i = 0; i < 4; i++) {
-    if(playerName[i] == '_') {
-       playerName[i]=' ';
-    }
-  }
-  lcd.print(playerName);
-  lcd.print(" ");
-  lcd.print(EEPROM.read(5));
+  printPlayerName(8, 5);
 
   delay(delayMainMenus);
    
@@ -51,15 +55,7 @@ void highScore() {
   lcd.print("LEADERBOARD");
   lcd.setCursor(2, 1);
   lcd.print("2.");
-  playerName = readStringFromEEPROM(9);
-  for(int i = 0; i < 4; i++) {
-    if(playerName[i] == '_') {
-       playerName[i]=' ';
-    }
-  }
-  lcd.print(playerName);
-  lcd.print(" ");
-  lcd.print(EEPROM.read(6));
+  printPlayerName(9, 6);
 
   delay(delayMainMenus);
    
@@ -68,15 +64,7 @@ void highScore() {
   lcd.print("LEADERBOARD");
   lcd.setCursor(2, 1);
   lcd.print("3.");
-  playerName = readStringFromEEPROM(10);
-  for(int i = 0; i < 4; i++) {
-    if(playerName[i] == '_') {
-       playerName[i]=' ';
-    }
-  }
-  lcd.print(playerName);
-  lcd.print(" ");
-  lcd.print(EEPROM.read(7));
+  printPlayerName(10, 7);
 
   delay(delayMainMenus);
 

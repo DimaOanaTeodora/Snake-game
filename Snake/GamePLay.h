@@ -1,7 +1,10 @@
-int moveGameInterval = 110;
+int moveGameInterval = 150;
 bool congratsHighScoreScreen = false;
 bool congratsScreen = false;
 bool playAgainScreen = false;
+
+// -1 left, 1 right, 2 up, -2 down 
+int snakeDirection = 0;
 
 // HIGH SCORE -> PLAYER
 String player = "____";
@@ -62,7 +65,8 @@ void resetGame() {
   enteringPlayerName = false;
   level = 1;
   points = 0; 
-  moveGameInterval = 110;
+  moveGameInterval = 150;
+  snakeDirection = 0;
   game(); //reset LCD
 
   // generate obstacles depending on the level
@@ -241,13 +245,32 @@ void moveGame(int nextPosition, bool directionRow) {
 }
 void updateSnakePosition() {
   // move the snake one position on the board
-  if(joystickMovedUp()) {
+  if(snakeDirection != -2 && joystickMovedUp()) {
+    // if the snake move in a direction it doesn't move in the oposite direction
+    snakeDirection = 2;
     moveGame(snakeRow[snakeLength - 1] + 1, true);
-  }else if(joystickMovedDown()) {
+  }else if(snakeDirection != 2 && joystickMovedDown()) {
+    snakeDirection = -2;
     moveGame(snakeRow[snakeLength - 1] - 1, true);
-  }else if(joystickMovedRight()) {
+  }else if(snakeDirection != -1 && joystickMovedRight()) {
+    snakeDirection = 1;
     moveGame(snakeCol[snakeLength - 1] - 1, false);
-  }else if(joystickMovedLeft()) {
+  }else if(snakeDirection != 1 && joystickMovedLeft()) {
+    snakeDirection = -1;
     moveGame(snakeCol[snakeLength - 1] + 1, false);
+  }else if(snakeDirection != 0) {
+    if(snakeDirection == -1) {
+      //continuously move the snake to the left
+      moveGame(snakeCol[snakeLength - 1] + 1, false);
+    }else if(snakeDirection == 1) {
+      //continuously move the snake to the right
+      moveGame(snakeCol[snakeLength - 1] - 1, false);
+    }else if(snakeDirection == 2) {
+      //continuously move the snake up
+      moveGame(snakeRow[snakeLength - 1] + 1, true);
+    }else if(snakeDirection == -2) {
+      //continuously move the snake down
+      moveGame(snakeRow[snakeLength - 1] - 1, true);
+    }
   }
 }
