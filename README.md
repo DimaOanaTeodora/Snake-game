@@ -229,3 +229,6 @@ EEPROM schema
   }
 }
  ```
+ 
+ Matrix animations
+ 
