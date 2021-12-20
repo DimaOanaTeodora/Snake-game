@@ -1,5 +1,5 @@
 #include <LiquidCrystal.h>
-const int RS = 12; 
+const int RS = 12;
 const int enable = 11;
 const int d4 = 5;
 const int d5 = 4;
@@ -40,7 +40,7 @@ void greetings() {
 }
 void congrats(int points) {
   updateMatrixDisplay(fullHeart);
-  
+
   lcd.clear();
   lcd.setCursor(3, 0);
   lcd.print("Congrats!");
@@ -59,7 +59,7 @@ void congrats(int points) {
 }
 void congratsHighScore(int points) {
   updateMatrixDisplay(fullHeart);
-  
+
   lcd.clear();
   lcd.setCursor(1, 0);
   lcd.print("New HighS: ");

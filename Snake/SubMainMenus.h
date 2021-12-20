@@ -1,7 +1,7 @@
-//START 
+//START
 void start() {
   menuSound();
-  updateMatrixDisplay(three); 
+  updateMatrixDisplay(three);
   lcd.clear();
   lcd.setCursor(5, 0);
   lcd.print("GAME");
@@ -26,20 +26,20 @@ void start() {
 
   gameHasStarted = true;
 }
-void printPlayerName(int nameIndex, int scoreIndex){
+void printPlayerName(int nameIndex, int scoreIndex) {
   String playerName = readStringFromEEPROM(nameIndex);
   int score = EEPROM.read(scoreIndex);
-  if(score > 0) {
-    for(int i = 0; i < 4; i++) {
-      if(playerName[i] != '_') {
-         lcd.print(playerName[i]);
+  if (score > 0) {
+    for (int i = 0; i < 4; i++) {
+      if (playerName[i] != '_') {
+        lcd.print(playerName[i]);
       }
     }
   }
   lcd.print(" ");
   lcd.print(score);
 }
-//HIGH SCORE 
+//HIGH SCORE
 void highScore() {
   lcd.clear();
   lcd.setCursor(2, 0);
@@ -49,7 +49,7 @@ void highScore() {
   printPlayerName(8, 5);
 
   delay(delayMainMenus);
-   
+
   lcd.clear();
   lcd.setCursor(2, 0);
   lcd.print("LEADERBOARD");
@@ -58,7 +58,7 @@ void highScore() {
   printPlayerName(9, 6);
 
   delay(delayMainMenus);
-   
+
   lcd.clear();
   lcd.setCursor(2, 0);
   lcd.print("LEADERBOARD");
@@ -87,7 +87,7 @@ void about() {
   lcd.print("Introduction");
   lcd.setCursor(3, 1);
   lcd.print("to Robotics");
-  
+
   delay(delayMainMenus);
 
   lcd.clear();
@@ -97,7 +97,7 @@ void about() {
   lcd.print("DimaOanaTeodora");
 
   delay(delayMainMenus);
-  
+
   lcd.clear();
   lcd.setCursor(4, 0);
   lcd.print("Thanks!");

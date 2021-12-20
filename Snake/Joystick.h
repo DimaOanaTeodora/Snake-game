@@ -17,16 +17,16 @@ void readFromJoystick() {
   switchState = digitalRead(pinSw);
 }
 bool joystickPressed() {
-   if(switchState == LOW) {
-      return true;
-   }
-   return false;
+  if (switchState == LOW) {
+    return true;
+  }
+  return false;
 }
 bool joystickMovedUp() {
-  if(yValue >= minTreshold) {
+  if (yValue >= minTreshold) {
     return false;
-  }else if(yValue < minTreshold) {
-    if(!gameHasStarted) {
+  } else if (yValue < minTreshold) {
+    if (!gameHasStarted) {
       updateMatrixDisplay(up);
       menuSound();
     }
@@ -34,10 +34,10 @@ bool joystickMovedUp() {
   }
 }
 bool joystickMovedDown() {
-  if(yValue <= maxTreshold) {
+  if (yValue <= maxTreshold) {
     return false;
-  }else if(yValue > maxTreshold) {
-    if(!gameHasStarted) {
+  } else if (yValue > maxTreshold) {
+    if (!gameHasStarted) {
       updateMatrixDisplay(down);
       menuSound();
     }
@@ -45,10 +45,10 @@ bool joystickMovedDown() {
   }
 }
 bool joystickMovedRight() {
-  if(xValue <= maxTreshold) {
+  if (xValue <= maxTreshold) {
     return false;
-  }else if(xValue > maxTreshold) {
-    if(!gameHasStarted) {
+  } else if (xValue > maxTreshold) {
+    if (!gameHasStarted) {
       updateMatrixDisplay(right);
       menuSound();
     }
@@ -56,10 +56,10 @@ bool joystickMovedRight() {
   }
 }
 bool joystickMovedLeft() {
-  if(xValue >= minTreshold) {
+  if (xValue >= minTreshold) {
     return false;
-  }else if(xValue < minTreshold) {
-    if(!gameHasStarted) {
+  } else if (xValue < minTreshold) {
+    if (!gameHasStarted) {
       updateMatrixDisplay(left);
       menuSound();
     }

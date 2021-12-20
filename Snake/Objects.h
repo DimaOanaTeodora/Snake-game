@@ -1,14 +1,14 @@
 /* Game objects: snake, obstacles, food
- * Difficulty:  
- *  LOW: no obstacles, 1 point/level 
- *  MEDIUM: 2 tiny obstacles, 2 points/level
- *  HIGH: 4 walls on the corners, 5 points/level
- *  ++ increase the speed 
- */
-String const difficulty[] ={"LOW", "MEDIUM", "HIGH"};
+   Difficulty:
+    LOW: no obstacles, 1 point/level
+    MEDIUM: 2 tiny obstacles, 2 points/level
+    HIGH: 4 walls on the corners, 5 points/level
+    ++ increase the speed
+*/
+String const difficulty[] = {"LOW", "MEDIUM", "HIGH"};
 byte difficultyLevel = 1;
 
-// GAME 
+// GAME
 int level = 1;
 int points = 0;
 
@@ -41,16 +41,16 @@ void cornerWalls() {
   lc.clearDisplay(0);
   wallsRow[0] = 0;
   wallsCol[0] = 0;
-  
+
   wallsRow[1] = 7;
   wallsCol[1] = 7;
-  
+
   wallsRow[2] = 7;
   wallsCol[2] = 0;
-  
+
   wallsRow[3] = 0;
   wallsCol[3] = 7;
-  
+
   wallsRow[4] = 0;
   wallsCol[4] = 1;
 
@@ -74,7 +74,7 @@ void cornerWalls() {
 
   wallsRow[11] = 1;
   wallsCol[11] = 7;
-  
+
   numberOfWalls = 12;
 }
 void tinyObstacles() {
@@ -84,12 +84,12 @@ void tinyObstacles() {
   lc.clearDisplay(0);
   int row = random(0, matrixSize - 1);
   int col = random(0, matrixSize - 1);
-  
+
   wallsRow[0] = row;
   wallsCol[0] = col;
   wallsRow[1] = row;
   wallsCol[1] = col + 1;
-  
+
   row = random(0, matrixSize - 1);
   col = random(0, matrixSize - 1);
 
@@ -101,8 +101,8 @@ void tinyObstacles() {
 }
 bool isPartOfObstacle(int row, int col) {
   // true if a point(row, col) is part of a wall
-  for(int i = 0; i< numberOfWalls; i++){
-    if(wallsRow[i] == row && wallsCol[i] == col){
+  for (int i = 0; i < numberOfWalls; i++) {
+    if (wallsRow[i] == row && wallsCol[i] == col) {
       return true;
     }
   }
@@ -111,20 +111,20 @@ bool isPartOfObstacle(int row, int col) {
 void generateSnake() {
   // random generating the head of the snake
   int row, col, maxInterval, minInterval;
-  
-  if(difficultyLevel == 3){
+
+  if (difficultyLevel == 3) {
     maxInterval = matrixSize - 3;
     minInterval = matrixSize - 2;
-  }else{
-     maxInterval = matrixSize - 2;
-     minInterval = matrixSize;
+  } else {
+    maxInterval = matrixSize - 2;
+    minInterval = matrixSize;
   }
-  
-  do{
+
+  do {
     row = random(0, minInterval);
     col = random(0, maxInterval);
-  }while(isPartOfObstacle(row, col));
-  
+  } while (isPartOfObstacle(row, col));
+
   snakeRow[0] = row;
   snakeCol[0] = col;
   snakeRow[1] = row;
@@ -133,22 +133,22 @@ void generateSnake() {
 }
 bool isPartOfSnake(int row, int col) {
   // true if a point(row, col) is part of the snake
-  for(int i = 0; i < snakeLength; i++){
-     if(snakeRow[i] == row && snakeCol[i] == col) {
+  for (int i = 0; i < snakeLength; i++) {
+    if (snakeRow[i] == row && snakeCol[i] == col) {
       return true;
-     }
+    }
   }
   return false;
 }
 void generateFood() {
   // generate random the food
-  int row, col; 
-  
-  do{ 
+  int row, col;
+
+  do {
     row = random(0, matrixSize);
     col = random(0, matrixSize);
-  }while(isPartOfSnake(row, col) || isPartOfObstacle(row, col));
-  
+  } while (isPartOfSnake(row, col) || isPartOfObstacle(row, col));
+
   lastFoodRow = foodRow;
   lastFoodCol = foodCol;
   foodRow = row;
